@@ -1,0 +1,25 @@
+# CareerStart robots.txt
+# Allow search engines to crawl the site
+
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /dashboard
+Disallow: /api
+Disallow: /.git
+Disallow: /.env
+Disallow: /node_modules
+
+# Specific rules for Google
+User-agent: Googlebot
+Allow: /
+
+# Specific rules for Bing
+User-agent: Bingbot
+Allow: /
+
+# Sitemap location
+Sitemap: https://careerstart.co.ke/sitemap.xml
+
+# Crawl delay and request rate
+Crawl-delay: 1

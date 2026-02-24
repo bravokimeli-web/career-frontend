@@ -1,0 +1,28 @@
+{
+  "name": "CareerStart",
+  "short_name": "CareerStart",
+  "description": "Find your perfect internship or industrial attachment in Kenya. Access verified opportunities from top companies and launch your career with CareerStart.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#F7F4EF",
+  "theme_color": "#C75B2B",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "32x32",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ],
+  "categories": ["business", "productivity"],
+  "screenshots": [
+    {
+      "src": "/screenshot-mobile.png",
+      "sizes": "540x720",
+      "type": "image/png",
+      "form_factor": "narrow"
+    }
+  ]
+}
