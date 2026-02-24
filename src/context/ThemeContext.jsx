@@ -5,10 +5,7 @@ const ThemeContext = createContext(null)
 function getInitialTheme() {
   const stored = localStorage.getItem('ias-theme')
   if (stored === 'light' || stored === 'dark') return stored
-  if (typeof window !== 'undefined' && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-    return 'dark'
-  }
-  return 'light'
+  return 'light' // Always default to light mode, user can toggle to dark
 }
 
 export function ThemeProvider({ children }) {
