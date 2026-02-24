@@ -496,6 +496,33 @@ function HowItWorks() {
 /* ─── Testimonials ───────────────────────────────────────────── */
 function Testimonials() {
   const [ref, inView] = useInView()
+  const [currentIndex, setCurrentIndex] = useState(0)
+  const [itemsPerView, setItemsPerView] = useState(1)
+  const carouselRef = useRef(null)
+
+  useEffect(() => {
+    const updateItemsPerView = () => {
+      if (typeof window !== 'undefined') {
+        setItemsPerView(window.innerWidth >= 768 ? 2 : 1)
+      }
+    }
+    updateItemsPerView()
+    window.addEventListener('resize', updateItemsPerView)
+    return () => window.removeEventListener('resize', updateItemsPerView)
+  }, [])
+
+  const maxIndex = Math.max(0, TESTIMONIALS.length - itemsPerView)
+  
+  const goToPrevious = () => {
+    setCurrentIndex(prev => prev === 0 ? maxIndex : prev - 1)
+  }
+  
+  const goToNext = () => {
+    setCurrentIndex(prev => prev === maxIndex ? 0 : prev + 1)
+  }
+
+  const visibleTestimonials = TESTIMONIALS.slice(currentIndex, currentIndex + itemsPerView)
+
   return (
     <section id="testimonials" className={styles.section} ref={ref}>
       <div className={styles.sectionInner}>
@@ -504,21 +531,42 @@ function Testimonials() {
           <h2 className={styles.sectionHeading}>Trusted by students<br />and recruiters alike</h2>
         </div>
 
-        <div className={styles.testimonialGrid}>
-          {TESTIMONIALS.map((t, i) => (
-            <div key={t.name}
-              className={`${styles.testimonialCard} ${inView ? styles.fadeUp : ''}`}
-              style={{ animationDelay: `${i * 0.1}s` }}>
-              <div className={styles.quoteIcon}>"</div>
-              <p className={styles.quoteText}>{t.quote}</p>
-              <div className={styles.quotePerson}>
-                <div className={styles.quoteAvatar} style={{ background: t.bg, color: t.color }}>{t.initials}</div>
-                <div>
-                  <div className={styles.quoteName}>{t.name}</div>
-                  <div className={styles.quoteRole}>{t.role}</div>
+        <div className={styles.testimonialCarousel} ref={carouselRef}>
+          <button className={styles.carouselBtn} onClick={goToPrevious} aria-label="Previous testimonial">
+            ←
+          </button>
+
+          <div className={styles.testimonialGrid}>
+            {visibleTestimonials.map((t, i) => (
+              <div key={t.name}
+                className={`${styles.testimonialCard} ${inView ? styles.fadeUp : ''}`}
+                style={{ animationDelay: `${i * 0.1}s` }}>
+                <div className={styles.quoteIcon}>"</div>
+                <p className={styles.quoteText}>{t.quote}</p>
+                <div className={styles.quotePerson}>
+                  <div className={styles.quoteAvatar} style={{ background: t.bg, color: t.color }}>{t.initials}</div>
+                  <div>
+                    <div className={styles.quoteName}>{t.name}</div>
+                    <div className={styles.quoteRole}>{t.role}</div>
+                  </div>
                 </div>
               </div>
-            </div>
+            ))}
+          </div>
+
+          <button className={styles.carouselBtn} onClick={goToNext} aria-label="Next testimonial">
+            →
+          </button>
+        </div>
+
+        <div className={styles.carouselDots}>
+          {Array.from({ length: maxIndex + 1 }).map((_, i) => (
+            <button
+              key={i}
+              className={`${styles.dot} ${i === currentIndex ? styles.dotActive : ''}`}
+              onClick={() => setCurrentIndex(i)}
+              aria-label={`Go to testimonial ${i + 1}`}
+            />
           ))}
         </div>
       </div>
