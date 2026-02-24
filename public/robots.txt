@@ -4,7 +4,6 @@
 User-agent: *
 Allow: /
 Disallow: /admin
-Disallow: /dashboard
 Disallow: /api
 Disallow: /src
 Disallow: /dist
@@ -25,4 +24,4 @@ User-agent: AppleBot
 Allow: /
 
 # Sitemap location
-Sitemap: https://careerstart.co.ke/sitemap.xml
+Sitemap: https://www.careerstart.co.ke/sitemap.xml
