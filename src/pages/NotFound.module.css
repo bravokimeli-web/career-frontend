@@ -1,0 +1,141 @@
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 20px;
+  background: var(--bg);
+}
+
+.content {
+  text-align: center;
+  max-width: 600px;
+}
+
+.code {
+  font-size: 8rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin: 0;
+  line-height: 1;
+}
+
+.content h2 {
+  font-size: 2rem;
+  color: var(--text);
+  margin-top: 16px;
+  margin-bottom: 12px;
+  font-weight: 600;
+}
+
+.content p {
+  font-size: 1.1rem;
+  color: var(--text2);
+  margin-bottom: 32px;
+}
+
+.actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  margin-bottom: 48px;
+  flex-wrap: wrap;
+}
+
+.btnPrimary,
+.btnSecondary {
+  padding: 12px 24px;
+  border-radius: var(--radius-sm);
+  border: none;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.btnPrimary {
+  background: var(--accent);
+  color: var(--on-accent);
+}
+
+.btnPrimary:hover {
+  background: var(--accent2);
+  transform: translateY(-2px);
+}
+
+.btnSecondary {
+  background: var(--surface2);
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+
+.btnSecondary:hover {
+  background: var(--surface);
+  border-color: var(--accent);
+}
+
+.suggestions {
+  text-align: left;
+  background: var(--surface);
+  padding: 24px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+}
+
+.suggestions h3 {
+  color: var(--text);
+  margin-top: 0;
+  margin-bottom: 16px;
+  font-size: 1rem;
+}
+
+.suggestions ul {
+  list-style: none;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+}
+
+.suggestions li {
+  margin: 0;
+}
+
+.suggestions a {
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 500;
+  transition: var(--transition);
+}
+
+.suggestions a:hover {
+  color: var(--accent2);
+  text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+  .code {
+    font-size: 5rem;
+  }
+
+  .content h2 {
+    font-size: 1.6rem;
+  }
+
+  .actions {
+    flex-direction: column;
+  }
+
+  .btnPrimary,
+  .btnSecondary {
+    width: 100%;
+  }
+
+  .suggestions ul {
+    grid-template-columns: 1fr;
+  }
+}

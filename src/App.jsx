@@ -18,6 +18,10 @@ import CVBuilder from './pages/CVBuilder'
 import CareerGuidance from './pages/CareerGuidance'
 import Settings  from './pages/Settings'
 import AdminDashboard from './pages/AdminDashboard'
+import Privacy   from './pages/Privacy'
+import Terms     from './pages/Terms'
+import Cookies   from './pages/Cookies'
+import NotFound  from './pages/NotFound'
 import { authService } from './services/api'
 
 const PAGE_TITLES = {
@@ -224,9 +228,12 @@ export default function App() {
             <Route path="/login" element={<LoginRoute mode="login" />} />
             <Route path="/signup" element={<LoginRoute mode="register" />} />
             <Route path="/reset-password" element={<ResetPasswordRoute />} />
+            <Route path="/privacy" element={<Privacy />} />
+            <Route path="/terms" element={<Terms />} />
+            <Route path="/cookies" element={<Cookies />} />
             <Route path="/app" element={<Navigate to="/app/dashboard" replace />} />
             <Route path="/app/:page" element={<AppRoute />} />
-            <Route path="*" element={<Navigate to="/" replace />} />
+            <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
       </AuthProvider>

@@ -12,6 +12,8 @@ export default function Browse() {
   const [loading, setLoading] = useState(true)
   const [page, setPage] = useState(1)
   const [search, setSearch] = useState('')
+  const [type, setType] = useState('') // '' | 'internship' | 'attachment'
+  const [location, setLocation] = useState('') // location filter
   const [savedIds, setSavedIds] = useState(new Set())
   const [applyOpportunity, setApplyOpportunity] = useState(null)
   const [detailOpportunity, setDetailOpportunity] = useState(null)
@@ -22,7 +24,11 @@ export default function Browse() {
   useEffect(() => {
     let cancelled = false
     setLoading(true)
-    opportunityService.getAll({ page, limit: 12, search: search || undefined })
+    const params = { page, limit: 12 }
+    if (search) params.search = search
+    if (type) params.type = type
+    if (location) params.location = location
+    opportunityService.getAll(params)
       .then(res => {
         if (!cancelled) {
           setOpportunities(res.data.opportunities || [])
@@ -32,7 +38,7 @@ export default function Browse() {
       .catch(() => { if (!cancelled) setOpportunities([]); setTotal(0) })
       .finally(() => { if (!cancelled) setLoading(false) })
     return () => { cancelled = true }
-  }, [page, search])
+  }, [page, search, type, location])
 
   useEffect(() => {
     if (!user) return
@@ -85,6 +91,25 @@ export default function Browse() {
           className={styles.search}
           value={search}
           onChange={(e) => { setSearch(e.target.value); setPage(1); }}
+        />
+      </div>
+
+      <div className={styles.filters}>
+        <select
+          className={styles.filter}
+          value={type}
+          onChange={(e) => { setType(e.target.value); setPage(1); }}
+        >
+          <option value="">All Types</option>
+          <option value="internship">Internship</option>
+          <option value="attachment">Industrial Attachment</option>
+        </select>
+        <input
+          type="text"
+          placeholder="Filter by location…"
+          className={styles.filter}
+          value={location}
+          onChange={(e) => { setLocation(e.target.value); setPage(1); }}
         />
       </div>
 

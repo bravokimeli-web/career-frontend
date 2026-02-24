@@ -497,7 +497,7 @@ function CTABanner({ onEnterApp, onSignIn, onGetStarted }) {
       <div className={styles.ctaOrb2} aria-hidden />
       <div className={`${styles.ctaInner} ${inView ? styles.fadeUp : ''}`}>
         <h2 className={styles.ctaHeading}>Your next opportunity<br />is waiting for you</h2>
-        <p className={styles.ctaSub}>Join thousands of students who found their internship or industrial attachment through IAS. It's free, fast, and built for you.</p>
+        <p className={styles.ctaSub}>Join thousands of students who found their internship or industrial attachment through CareerStart. It's free, fast, and built for you.</p>
         <div className={styles.ctaBtns}>
           <button className={styles.btnHeroPrimary} onClick={createAccount}>Sign up</button>
           <button className={styles.btnHeroGhost}   onClick={browse}>Login — you already have an account</button>
@@ -519,19 +519,19 @@ const PLATFORM_LINKS = [
 ]
 
 const COMPANIES_LINKS = [
-  { label: 'Post a Role', href: `mailto:${CONTACT_EMAIL}?subject=Post%20a%20Role%20-%20IAS%20Platform` },
+  { label: 'Post a Role', href: `mailto:${CONTACT_EMAIL}?subject=Post%20a%20Role` },
   { label: 'Find Talent', href: '#for-companies' },
-  { label: 'Partner with Us', href: `mailto:${CONTACT_EMAIL}?subject=Partner%20with%20Us%20-%20IAS%20Platform` },
-  { label: 'Pricing', href: `mailto:${CONTACT_EMAIL}?subject=Pricing%20enquiry%20-%20IAS%20Platform` },
+  { label: 'Partner with Us', href: `mailto:${CONTACT_EMAIL}?subject=Partner%20with%20Us` },
+  { label: 'Pricing', href: `mailto:${CONTACT_EMAIL}?subject=Pricing%20enquiry` },
   { label: 'Success Stories', href: '#testimonials' },
 ]
 
 const SUPPORT_LINKS = [
   { label: 'Help Centre', href: '#how-it-works' },
-  { label: 'Contact Us', href: `mailto:${CONTACT_EMAIL}?subject=Contact%20Us%20-%20IAS%20Platform` },
-  { label: 'Privacy Policy', href: `mailto:${CONTACT_EMAIL}?subject=Privacy%20Policy%20-%20IAS%20Platform` },
-  { label: 'Terms of Service', href: `mailto:${CONTACT_EMAIL}?subject=Terms%20of%20Service%20-%20IAS%20Platform` },
-  { label: 'Cookie Policy', href: `mailto:${CONTACT_EMAIL}?subject=Cookie%20Policy%20-%20IAS%20Platform` },
+  { label: 'Contact Us', href: `mailto:${CONTACT_EMAIL}?subject=Contact%20Us` },
+  { label: 'Privacy Policy', href: '/privacy' },
+  { label: 'Terms of Service', href: '/terms' },
+  { label: 'Cookie Policy', href: '/cookies' },
 ]
 
 function Footer() {
@@ -540,8 +540,8 @@ function Footer() {
       <div className={styles.footerInner}>
         <div className={styles.footerBrand}>
           <div className={styles.footerLogo}>
-            <div className={styles.logoMark}>IAS</div>
-            <span className={styles.logoText}>IAS Platform</span>
+            <div className={styles.logoMark}>CS</div>
+            <span className={styles.logoText}>CareerStart</span>
           </div>
           <p className={styles.footerTagline}>Connecting students with quality internship and industrial attachment opportunities across Kenya and beyond.</p>
         </div>
@@ -569,7 +569,7 @@ function Footer() {
       </div>
 
       <div className={styles.footerBottom}>
-        <span>© {new Date().getFullYear()} IAS Platform. All Rights Reserved.</span>
+        <span>© {new Date().getFullYear()} CareerStart. All Rights Reserved.</span>
       </div>
     </footer>
   )

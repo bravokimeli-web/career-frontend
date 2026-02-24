@@ -10,6 +10,25 @@
   background: var(--surface);
   color: var(--text);
 }
+.filters {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+.filter {
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  background: var(--surface);
+  color: var(--text);
+  font-family: inherit;
+  cursor: pointer;
+}
+.filter:hover {
+  border-color: var(--accent);
+}
 .meta { font-size: 14px; color: var(--text2); margin-bottom: 16px; }
 .msg { color: var(--text2); padding: 32px 0; font-size: 15px; }
 .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
