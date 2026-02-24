@@ -3,7 +3,7 @@ import { createContext, useContext, useState, useEffect } from 'react'
 const ThemeContext = createContext(null)
 
 function getInitialTheme() {
-  const stored = localStorage.getItem('ias-theme')
+  const stored = localStorage.getItem('careerstart-theme')
   if (stored === 'light' || stored === 'dark') return stored
   return 'light' // Always default to light mode, user can toggle to dark
 }
@@ -13,7 +13,7 @@ export function ThemeProvider({ children }) {
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme)
-    localStorage.setItem('ias-theme', theme)
+    localStorage.setItem('careerstart-theme', theme)
   }, [theme])
 
   const toggleTheme = () => setTheme(t => t === 'dark' ? 'light' : 'dark')

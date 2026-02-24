@@ -173,8 +173,8 @@ function Navbar({ onEnterApp, onSignIn, onGetStarted }) {
       <div className={styles.navInner}>
         {/* Logo */}
         <div className={styles.navLogo}>
-          <div className={styles.logoMark}>IAS</div>
-          <span className={styles.logoText}>IAS Platform</span>
+          <div className={styles.logoMark}>CS</div>
+          <span className={styles.logoText}>CareerStart</span>
         </div>
 
         {/* Desktop links */}
@@ -277,7 +277,7 @@ function Hero({ onEnterApp, onSignIn, onGetStarted }) {
         </h1>
 
         <p className={`${styles.heroSub} ${styles.fadeUp}`} style={{ animationDelay: '.20s' }}>
-          IAS connects students with leading companies across Kenya and beyond.
+          CareerStart connects students with leading companies across Kenya and beyond.
           Browse hundreds of verified opportunities, apply in minutes, and track
           every stage of your placement journey.
         </p>
@@ -437,7 +437,7 @@ function ForCompanies() {
           ))}
         </div>
         <div className={`${styles.sectionHeader} ${inView ? styles.fadeUp : ''}`} style={{ marginTop: '2rem' }}>
-          <a href="mailto:opportunity.app@gmail.com?subject=Company%20enquiry%20-%20Get%20started%20with%20IAS" className={styles.btnHeroPrimary}>Get started as a company</a>
+          <a href="mailto:opportunity.app@gmail.com?subject=Company%20enquiry%20-%20Get%20started%20with%20CareerStart" className={styles.btnHeroPrimary}>Get started as a company</a>
         </div>
       </div>
     </section>
@@ -452,9 +452,9 @@ function About() {
       <div className={styles.sectionInner}>
         <div className={`${styles.sectionHeader} ${inView ? styles.fadeUp : ''}`}>
           <div className={styles.eyebrow}>Who we are</div>
-          <h2 className={styles.sectionHeading}>About IAS</h2>
+          <h2 className={styles.sectionHeading}>About CareerStart</h2>
           <p className={styles.sectionSub}>
-            IAS (Industrial Attachment &amp; Internship Platform) connects Kenyan students and graduates with quality internship and industrial attachment opportunities. We work with leading employers across sectors to make placement simple, transparent and fair — so every student can find the right role and every company can find the right talent.
+            CareerStart (Industrial Attachment &amp; Internship Platform) connects Kenyan students and graduates with quality internship and industrial attachment opportunities. We work with leading employers across sectors to make placement simple, transparent and fair — so every student can find the right role and every company can find the right talent.
           </p>
           <p className={styles.sectionSub} style={{ marginTop: '1rem' }}>
             Our mission is to bridge the gap between education and industry, helping students gain real-world experience and companies build a pipeline of skilled talent.

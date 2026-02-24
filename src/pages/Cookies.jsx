@@ -22,7 +22,7 @@ export default function Cookies() {
         <h2>3. Specific Cookies We Use</h2>
         <ul>
           <li><strong>careerstart_token:</strong> Stores your authentication token for session management</li>
-          <li><strong>ias-theme:</strong> Stores your theme preference (light or dark mode)</li>
+          <li><strong>careerstart-theme:</strong> Stores your theme preference (light or dark mode)</li>
           <li><strong>Session cookies:</strong> Temporary cookies used during your browsing session</li>
         </ul>
       </section>

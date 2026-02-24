@@ -26,7 +26,7 @@ const TIPS = [
 const RESOURCES = [
   { label: 'University career office', desc: 'Check your institution’s career or industrial attachment office for deadlines and approved employers.' },
   { label: 'LinkedIn', desc: 'Build a profile and connect with recruiters and alumni in your field.' },
-  { label: 'IAS opportunities', desc: 'Browse and apply to internships and industrial attachments directly from this platform.' },
+  { label: 'CareerStart opportunities', desc: 'Browse and apply to internships and industrial attachments directly from this platform.' },
 ]
 
 export default function CareerGuidance() {

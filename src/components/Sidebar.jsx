@@ -41,8 +41,8 @@ export default function Sidebar({ activeNav, setActiveNav, isOpen, onClose, user
       <aside className={`${styles.sidebar} ${isOpen ? styles.open : ''}`}>
         <div className={styles.header}>
           <div className={styles.logo}>
-            <div className={styles.logoMark}>IAS</div>
-            <span className={styles.logoName}>IAS Platform</span>
+            <div className={styles.logoMark}>CS</div>
+            <span className={styles.logoName}>CareerStart</span>
           </div>
           <p className={styles.logoTagline}>Internships &amp; Industrial Attachments</p>
         </div>
