@@ -418,26 +418,59 @@ function ForCompanies() {
   return (
     <section id="for-companies" className={`${styles.section} ${styles.sectionAlt}`} ref={ref}>
       <div className={styles.sectionInner}>
+        {/* Background gradient elements */}
+        <div className={styles.bgGradient1}></div>
+        <div className={styles.bgGradient2}></div>
+        
         <div className={`${styles.sectionHeader} ${inView ? styles.fadeUp : ''}`}>
-          <div className={styles.eyebrow}>Employers &amp; recruiters</div>
-          <h2 className={styles.sectionHeading}>Hire the best<br />student talent</h2>
-          <p className={styles.sectionSub}>Post internships and industrial attachment roles, reach verified students and graduates, and manage applications — all in one place.</p>
+          <div className={styles.eyebrow}>
+            <span className={styles.eyebrowBadge}>→</span>
+            For Employers &amp; Recruiters
+          </div>
+          <h2 className={styles.sectionHeading}>
+            Access top student <span className={styles.highlight}>talent</span>
+          </h2>
+          <p className={styles.sectionSub}>
+            Post internships and industrial attachments, reach verified and verified students across Kenya&apos;s top institutions, and manage your talent pipeline — all effortlessly.
+          </p>
         </div>
+
         <div className={styles.featureGrid}>
           {[
-            { icon: '📋', title: 'Post Roles in Minutes', desc: 'Create listings with your requirements, deadlines and application details. Publish and start receiving applications.' },
-            { icon: '✅', title: 'Verified Applicants', desc: 'Access students and graduates who have completed their profiles. Filter by department, skills and institution.' },
-            { icon: '📊', title: 'Manage Applications', desc: 'Review, shortlist and communicate with candidates. Track hiring pipeline from application to placement.' },
+            { 
+              icon: '📝', 
+              title: 'Create & Post Roles', 
+              desc: 'Set up role listings with requirements, deadlines, and application guidelines in minutes. Publish instantly and start receiving applications.' 
+            },
+            { 
+              icon: '👥', 
+              title: 'Access Verified Talent', 
+              desc: 'Browse students and graduates who have completed their profiles. Filter by department, skills, institution, and location.' 
+            },
+            { 
+              icon: '⚡', 
+              title: 'Manage Pipeline', 
+              desc: 'Review applications, shortlist candidates, communicate directly, and track your hiring progress from application to placement.' 
+            },
           ].map((f, i) => (
-            <div key={f.title} className={`${styles.featureCard} ${inView ? styles.fadeUp : ''}`} style={{ animationDelay: `${0.05 + i * 0.07}s` }}>
-              <div className={styles.featureEmoji}>{f.icon}</div>
+            <div key={f.title} className={`${styles.featureCard} ${styles.featureCardPro} ${inView ? styles.fadeUp : ''}`} style={{ animationDelay: `${0.05 + i * 0.07}s` }}>
+              <div className={styles.featureIcon}>{f.icon}</div>
               <h3 className={styles.featureTitle}>{f.title}</h3>
               <p className={styles.featureDesc}>{f.desc}</p>
             </div>
           ))}
         </div>
-        <div className={`${styles.sectionHeader} ${inView ? styles.fadeUp : ''}`} style={{ marginTop: '2rem' }}>
-          <a href="mailto:opportunity.app@gmail.com?subject=Company%20enquiry%20-%20Get%20started%20with%20CareerStart" className={styles.btnHeroPrimary}>Get started as a company</a>
+
+        <div className={`${styles.sectionHeader} ${inView ? styles.fadeUp : ''}`} style={{ marginTop: '3rem' }}>
+          <a 
+            href="mailto:opportunity.app@gmail.com?subject=Company%20enquiry%20-%20Get%20started%20with%20CareerStart" 
+            className={`${styles.btnHeroPrimary} ${styles.btnPro}`}
+          >
+            <span>Get Started as an Employer</span>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+          </a>
         </div>
       </div>
     </section>
