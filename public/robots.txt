@@ -6,6 +6,8 @@ Allow: /
 Disallow: /admin
 Disallow: /dashboard
 Disallow: /api
+Disallow: /src
+Disallow: /dist
 Disallow: /.git
 Disallow: /.env
 Disallow: /node_modules
@@ -18,8 +20,9 @@ Allow: /
 User-agent: Bingbot
 Allow: /
 
+# Apple
+User-agent: AppleBot
+Allow: /
+
 # Sitemap location
 Sitemap: https://careerstart.co.ke/sitemap.xml
-
-# Crawl delay and request rate
-Crawl-delay: 1
