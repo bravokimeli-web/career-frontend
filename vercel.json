@@ -3,7 +3,7 @@
   "outputDirectory": "dist",
   "rewrites": [
     {
-      "source": "/(?!sitemap\\.xml|robots\\.txt|manifest\\.json|favicon\\.svg|assets/)(.+?)(?:\\.[^.]*)?$",
+      "source": "^(?!.*\\.(js|css|json|xml|txt|svg|png|jpg|jpeg|gif|ico|woff|woff2|ttf|eot)$).*",
       "destination": "/index.html"
     }
   ],
