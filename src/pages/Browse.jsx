@@ -128,7 +128,7 @@ export default function Browse() {
                   <h3 className={styles.cardTitle}>{opp.title}</h3>
                   <p className={styles.cardCompany}>{opp.company}</p>
                   <div className={styles.tags}>
-                    <span className={styles.tag}>{opp.type === 'attachment' ? 'Industrial Attachment' : opp.type === 'internship' ? 'Internship' : opp.type}</span>
+                    <span className={`${styles.tag} ${opp.type === 'attachment' ? styles.tagAttachment : styles.tagInternship}`}>{opp.type === 'attachment' ? 'Industrial Attachment' : opp.type === 'internship' ? 'Internship' : opp.type}</span>
                     {opp.location && <span className={styles.tag}>{opp.location}</span>}
                   </div>
                   <button type="button" className={styles.seeMoreBtn} onClick={() => setDetailOpportunity(opp)}>

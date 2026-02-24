@@ -53,6 +53,8 @@
 .cardCompany { font-size: 13px; color: var(--text2); margin-bottom: 8px; }
 .tags { display: flex; flex-wrap: wrap; gap: 6px; }
 .tag { font-size: 12px; color: var(--text2); background: var(--surface2); padding: 4px 8px; border-radius: 6px; }
+.tagInternship { color: #1B5E20; background: #D8F3DC; font-weight: 500; }
+.tagAttachment { color: #0D47A1; background: #E3F2FD; font-weight: 500; }
 .cardActions { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
 .applyBtn { padding: 8px 14px; background: var(--accent); color: var(--on-accent); border: none; border-radius: var(--radius-sm); font-size: 13px; font-weight: 600; cursor: pointer; font-family: inherit; }
 .applyBtn:hover { opacity: 0.9; }
