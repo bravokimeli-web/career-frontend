@@ -1,4 +1,15 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none">
-  <rect width="32" height="32" rx="8" fill="#C75B2B"/>
-  <text x="16" y="22" font-family="system-ui, -apple-system, sans-serif" font-size="14" font-weight="800" fill="white" text-anchor="middle">CS</text>
+  <!-- Subtle gradient background -->
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#C75B2B;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#B84E22;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="32" height="32" rx="7" fill="url(#bgGrad)"/>
+  
+  <!-- Professional upward arrow representing growth/career advancement -->
+  <path d="M 16 7 L 22 13 M 16 7 L 10 13 M 16 7 L 16 24" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>
