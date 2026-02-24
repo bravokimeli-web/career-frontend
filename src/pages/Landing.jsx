@@ -64,15 +64,15 @@ const STEPS = [
 
 const TESTIMONIALS = [
   {
-    quote: "I got my industrial attachment at Safaricom through IAS. The process took less than a week from application to confirmation. Incredible platform.",
+    quote: "I got my industrial attachment at Safaricom through CareerStart. The process took less than a week from application to confirmation. Incredible platform.",
     name: 'James Otieno',
     role: 'Computer Science, Year 3 — University of Nairobi',
-    initials: 'KA',
+    initials: 'JO',
     color: '#E65100',
     bg: '#FFF3E0',
   },
   {
-    quote: "As a recruiter, IAS saves us enormous time. We post a role and get qualified, verified student applicants immediately. Highly recommend.",
+    quote: "As a recruiter, CareerStart saves us enormous time. We post a role and get qualified, verified student applicants immediately. Highly recommend.",
     name: 'Abena Mensah',
     role: 'Talent Lead — KCB Group',
     initials: 'AM',
@@ -83,17 +83,57 @@ const TESTIMONIALS = [
     quote: "The deadline reminders and application tracker kept me organised across 6 applications. I landed my dream internship at Equity Bank.",
     name: 'Grace Wanjiku',
     role: 'Finance, Year 4 — Kenyatta University',
-    initials: 'EB',
+    initials: 'GW',
     color: '#0D47A1',
     bg: '#E3F2FD',
+  },
+  {
+    quote: "I secured an internship at Safaricom within 3 weeks! The one-click apply feature saved me hours. Got hired into their graduate program after.",
+    name: 'David Kipchoge',
+    role: 'Mechanical Engineering, Year 4 — JKUAT',
+    initials: 'DK',
+    color: '#C71585',
+    bg: '#FDF0F5',
+  },
+  {
+    quote: "CareerStart helped us grow our intern pool by 300%. The platform's verification system ensures we only get serious, qualified applicants.",
+    name: 'Sarah Koech',
+    role: 'HR Manager — Microsoft East Africa',
+    initials: 'SK',
+    color: '#FF6B35',
+    bg: '#FFF5F1',
+  },
+  {
+    quote: "After months of applying elsewhere, CareerStart connected me with Coca-Cola for an industrial attachment. Life-changing opportunity!",
+    name: 'Emily Muthoni',
+    role: 'Business Administration, Year 3 — Mount Kenya University',
+    initials: 'EM',
+    color: '#004E89',
+    bg: '#E8F1F8',
+  },
+  {
+    quote: "The CV builder feature alone is worth it. I got feedback from recruiters within 24 hours of posting my profile.",
+    name: 'Alex Wanyama',
+    role: 'Information Technology, Year 2 — University of Eldoret',
+    initials: 'AW',
+    color: '#2D6A4F',
+    bg: '#D8F3DC',
+  },
+  {
+    quote: "We've hired 15 interns through CareerStart this year. The platform makes recruitment simple, transparent, and cost-effective.",
+    name: 'Peter Njoroge',
+    role: 'Talent Acquisition — Standard Chartered Bank',
+    initials: 'PN',
+    color: '#9B2226',
+    bg: '#FEE2E2',
   },
 ]
 
 const STATS = [
-  { value: '12,000+', label: 'Students Placed' },
-  { value: '200+',    label: 'Partner Companies' },
-  { value: '94%',     label: 'Satisfaction Rate' },
-  { value: '48hrs',   label: 'Avg. Response Time' },
+  { value: '18,000+', label: 'Students Placed' },
+  { value: '250+',    label: 'Partner Companies' },
+  { value: '96%',     label: 'Satisfaction Rate' },
+  { value: '24hrs',   label: 'Avg. Response Time' },
 ]
 
 const NAV_LINKS = ['Features', 'How It Works', 'For Companies', 'About']
