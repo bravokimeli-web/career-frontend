@@ -19,6 +19,67 @@ export default function Browse() {
   const [detailOpportunity, setDetailOpportunity] = useState(null)
   const { user } = useAuth()
 
+  // Update page meta tags for SEO
+  useEffect(() => {
+    document.title = 'Browse Opportunities | CareerStart'
+    const metaDesc = document.querySelector('meta[name="description"]')
+    if (metaDesc) {
+      metaDesc.setAttribute('content', 'Browse verified internship and industrial attachment opportunities in Kenya. Filter by type and location, apply in minutes.')
+    }
+  }, [])
+
+  // Add schema markup for the opportunities collection
+  useEffect(() => {
+    const script = document.createElement('script')
+    script.type = 'application/ld+json'
+    script.innerHTML = JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "CollectionPage",
+      "name": "Browse Internship & Industrial Attachment Opportunities",
+      "description": "Verified opportunities from Kenya's leading companies",
+      "url": "https://www.careerstart.co.ke/browse",
+      "mainEntity": {
+        "@type": "ItemList",
+        "name": "Career Opportunities",
+        "itemListElement": opportunities.slice(0, 10).map((opp, idx) => ({
+          "@type": "ListItem",
+          "position": idx + 1,
+          "name": opp.title,
+          "description": opp.description || 'Career opportunity',
+          "url": `https://www.careerstart.co.ke/browse?opportunity=${opp._id}`
+        }))
+      }
+    })
+    document.head.appendChild(script)
+    return () => script.remove()
+  }, [opportunities])
+
+  // Add breadcrumb schema markup
+  useEffect(() => {
+    const breadcrumbScript = document.createElement('script')
+    breadcrumbScript.type = 'application/ld+json'
+    breadcrumbScript.innerHTML = JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://www.careerstart.co.ke"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Browse Opportunities",
+          "item": "https://www.careerstart.co.ke/browse"
+        }
+      ]
+    })
+    document.head.appendChild(breadcrumbScript)
+    return () => breadcrumbScript.remove()
+  }, [])
+
   const typeLabel = (t) => (t === 'attachment' ? 'Industrial Attachment' : t === 'internship' ? 'Internship' : t || '')
 
   useEffect(() => {
@@ -83,6 +144,17 @@ export default function Browse() {
           onApply={user ? (opp) => { setDetailOpportunity(null); setApplyOpportunity(opp); } : undefined}
         />
       )}
+      
+      {/* Static intro section for SEO - visible immediately */}
+      <section className={styles.introSection} itemScope itemType="https://schema.org/CollectionPage">
+        <meta itemProp="url" content="https://www.careerstart.co.ke/browse" />
+        <meta itemProp="name" content="Browse Opportunities" />
+        <h1 className={styles.heading} itemProp="headline">Browse Verified Internship & Industrial Attachment Opportunities</h1>
+        <p className={styles.intro} itemProp="description">
+          Discover 250+ verified opportunities from Kenya's leading companies. Filter by type (internships vs industrial attachments) and location, then apply in minutes. 
+          CareerStart connects you with quality placements that match your skills and career goals.
+        </p>
+      </section>
       <div className={styles.header}>
         <h2 className={styles.title}>Browse Opportunities</h2>
         <input
