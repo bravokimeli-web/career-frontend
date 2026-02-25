@@ -1,3 +1,6 @@
+// CareerStart - Main React Application
+// Deployment trigger for Vercel
+
 import { useState, useEffect, useCallback } from 'react'
 import { BrowserRouter, Routes, Route, Navigate, useNavigate, useLocation } from 'react-router-dom'
 import { ThemeProvider } from './context/ThemeContext'
