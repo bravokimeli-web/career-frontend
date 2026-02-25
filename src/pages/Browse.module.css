@@ -1,12 +1,14 @@
 .content { padding: 24px 32px; max-width: 1200px; }
 
-/* Static SEO intro section */
+/* Static SEO intro section - visible immediately for Google crawlers */
 .introSection {
   background: linear-gradient(135deg, var(--bg2) 0%, var(--bg) 100%);
   border: 1px solid var(--border);
   border-radius: var(--radius);
   padding: 32px;
   margin-bottom: 32px;
+  position: relative;
+  z-index: 1;
 }
 
 .heading {
@@ -106,4 +108,21 @@
   font-family: inherit;
 }
 .seeMoreBtn:hover { background: var(--accent-bg); }
+
+/* Responsive design for Browse intro section */
+@media (max-width: 768px) {
+  .introSection {
+    padding: 24px;
+    margin-bottom: 24px;
+  }
+  
+  .heading {
+    font-size: 22px;
+    margin-bottom: 10px;
+  }
+  
+  .intro {
+    font-size: 14px;
+  }
+}
 
