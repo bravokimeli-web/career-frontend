@@ -33,6 +33,7 @@ export default function AdminDashboard() {
   const [visitors, setVisitors] = useState([])
   const [analyticsLoading, setAnalyticsLoading] = useState(false)
   const [visitorFilter, setVisitorFilter] = useState('all') // all | anonymous | logged-in | not-applied
+  const [sendingEncouragement, setSendingEncouragement] = useState(null)
 
   useEffect(() => {
     dashboardService.getStats()
@@ -145,6 +146,17 @@ export default function AdminDashboard() {
       })
       .catch(err => alert(err.response?.data?.message || 'Failed to send reminder'))
       .finally(() => setSendingReminder(null))
+  }
+
+  const handleSendEncouragement = (user) => {
+    if (!window.confirm(`Send encouragement email to ${user.name}?`)) return
+    setSendingEncouragement(user._id)
+    dashboardService.sendEncouragementEmail(user._id)
+      .then(() => {
+        alert(`Encouragement email sent to ${user.email}!`)
+      })
+      .catch(err => alert(err.response?.data?.message || 'Failed to send email'))
+      .finally(() => setSendingEncouragement(null))
   }
 
   if (loading && !stats) {
@@ -382,6 +394,7 @@ export default function AdminDashboard() {
                           <th>Email</th>
                           <th>Joined</th>
                           <th>Page Visits</th>
+                          <th>Action</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -391,6 +404,17 @@ export default function AdminDashboard() {
                             <td>{user.email}</td>
                             <td><small className={styles.timestamp}>{formatDate(user.joinedAt)}</small></td>
                             <td>{user.visits}</td>
+                            <td>
+                              <button
+                                type="button"
+                                className={styles.encouragementBtn}
+                                onClick={() => handleSendEncouragement(user)}
+                                disabled={sendingEncouragement === user._id}
+                                title="Send encouragement email to get them started"
+                              >
+                                {sendingEncouragement === user._id ? '…' : '💌 Message'}
+                              </button>
+                            </td>
                           </tr>
                         ))}
                       </tbody>

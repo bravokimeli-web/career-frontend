@@ -80,6 +80,7 @@ export const dashboardService = {
   trackPageVisit: (data) => api.post('/dashboard/track-visit', data),
   getAnalytics: (params) => api.get('/dashboard/analytics', { params }),
   getVisitors: (params) => api.get('/dashboard/visitors', { params }),
+  sendEncouragementEmail: (userId) => api.post(`/dashboard/send-encouragement/${userId}`),
 }
 
 // ══════════════════════════════════════════════════════════════
