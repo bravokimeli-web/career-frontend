@@ -22,13 +22,17 @@ export default function AdminDashboard() {
   const [applications, setApplications] = useState([])
   const [appStats, setAppStats] = useState(null)
   const [loading, setLoading] = useState(true)
-  const [tab, setTab] = useState('overview') // overview | opportunities | applications
+  const [tab, setTab] = useState('overview') // overview | opportunities | applications | analytics
   const [appStatusFilter, setAppStatusFilter] = useState('all') // all | pending | completed
   const [showForm, setShowForm] = useState(false)
   const [editing, setEditing] = useState(null)
   const [form, setForm] = useState({ title: '', company: '', type: 'internship', description: '', location: '', duration: '', applicationFee: 350, isActive: true })
   const [refunding, setRefunding] = useState(null)
   const [sendingReminder, setSendingReminder] = useState(null)
+  const [analytics, setAnalytics] = useState(null)
+  const [visitors, setVisitors] = useState([])
+  const [analyticsLoading, setAnalyticsLoading] = useState(false)
+  const [visitorFilter, setVisitorFilter] = useState('all') // all | anonymous | logged-in | not-applied
 
   useEffect(() => {
     dashboardService.getStats()
@@ -53,6 +57,26 @@ export default function AdminDashboard() {
     }).finally(() => { if (!cancelled) setLoading(false) })
     return () => { cancelled = true }
   }, [appStatusFilter])
+
+  // Load analytics data when analytics tab is opened
+  useEffect(() => {
+    if (tab !== 'analytics') return
+    setAnalyticsLoading(true)
+    dashboardService.getAnalytics({ days: 30 })
+      .then(res => setAnalytics(res.data))
+      .catch(() => setAnalytics(null))
+      .finally(() => setAnalyticsLoading(false))
+  }, [tab])
+
+  // Load visitors data when analytics tab is opened
+  useEffect(() => {
+    if (tab !== 'analytics') return
+    setAnalyticsLoading(true)
+    dashboardService.getVisitors({ type: visitorFilter === 'all' ? undefined : visitorFilter, limit: 50 })
+      .then(res => setVisitors(res.data.visitors || []))
+      .catch(() => setVisitors([]))
+      .finally(() => setAnalyticsLoading(false))
+  }, [tab, visitorFilter])
 
   const handleCreateOrUpdate = (e) => {
     e.preventDefault()
@@ -134,6 +158,7 @@ export default function AdminDashboard() {
         <button type="button" className={tab === 'overview' ? styles.tabActive : styles.tab} onClick={() => setTab('overview')}>Overview</button>
         <button type="button" className={tab === 'opportunities' ? styles.tabActive : styles.tab} onClick={() => setTab('opportunities')}>Opportunities</button>
         <button type="button" className={tab === 'applications' ? styles.tabActive : styles.tab} onClick={() => setTab('applications')}>Applications</button>
+        <button type="button" className={tab === 'analytics' ? styles.tabActive : styles.tab} onClick={() => setTab('analytics')}>Analytics</button>
       </div>
 
       {tab === 'overview' && stats && (
@@ -318,6 +343,111 @@ export default function AdminDashboard() {
               </tbody>
             </table>
           </div>
+        </>
+      )}
+
+      {tab === 'analytics' && (
+        <>
+          {analyticsLoading ? (
+            <p className={styles.msg}>Loading analytics…</p>
+          ) : analytics ? (
+            <div>
+              <div className={styles.analyticsGrid}>
+                <div className={styles.statCard}>
+                  <span className={styles.statValue}>{analytics.analytics?.totalVisitors ?? 0}</span>
+                  <span className={styles.statLabel}>Total page visits</span>
+                </div>
+                <div className={styles.statCard}>
+                  <span className={styles.statValue}>{analytics.analytics?.anonVisitors ?? 0}</span>
+                  <span className={styles.statLabel}>Anonymous visitors</span>
+                </div>
+                <div className={styles.statCard}>
+                  <span className={styles.statValue}>{analytics.analytics?.authenticatedVisitors ?? 0}</span>
+                  <span className={styles.statLabel}>Logged-in visitors</span>
+                </div>
+                <div className={styles.statCard}>
+                  <span className={styles.statValue}>{analytics.analytics?.usersNotAppliedCount ?? 0}</span>
+                  <span className={styles.statLabel}>Users not applied</span>
+                </div>
+              </div>
+
+              <div className={styles.section}>
+                <h3 className={styles.sectionTitle}>Users Who Signed In But Didn't Apply</h3>
+                {analytics.usersNotApplied && analytics.usersNotApplied.length > 0 ? (
+                  <div className={styles.tableWrapper}>
+                    <table className={styles.table}>
+                      <thead>
+                        <tr>
+                          <th>Name</th>
+                          <th>Email</th>
+                          <th>Joined</th>
+                          <th>Page Visits</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {analytics.usersNotApplied.map(user => (
+                          <tr key={user._id}>
+                            <td className={styles.applicantName}>{user.name}</td>
+                            <td>{user.email}</td>
+                            <td><small className={styles.timestamp}>{formatDate(user.joinedAt)}</small></td>
+                            <td>{user.visits}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                ) : (
+                  <p className={styles.msg}>No data yet</p>
+                )}
+              </div>
+
+              <div className={styles.section}>
+                <h3 className={styles.sectionTitle}>Page Visitors</h3>
+                <div className={styles.filterRow}>
+                  <select
+                    className={styles.filter}
+                    value={visitorFilter}
+                    onChange={(e) => setVisitorFilter(e.target.value)}
+                  >
+                    <option value="all">All visitors</option>
+                    <option value="anonymous">Anonymous visitors</option>
+                    <option value="logged-in">Logged-in users</option>
+                    <option value="not-applied">Users who didn't apply</option>
+                  </select>
+                </div>
+                {visitors && visitors.length > 0 ? (
+                  <div className={styles.tableWrapper}>
+                    <table className={styles.table}>
+                      <thead>
+                        <tr>
+                          <th>User</th>
+                          <th>Email</th>
+                          <th>Page</th>
+                          <th>Time Spent (s)</th>
+                          <th>Visit Time</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {visitors.map(v => (
+                          <tr key={v._id}>
+                            <td className={styles.applicantName}>{v.userName}</td>
+                            <td>{v.userEmail}</td>
+                            <td><span className={styles.badge}>{v.page}</span></td>
+                            <td>{v.timeSpent}s</td>
+                            <td><small className={styles.timestamp}>{formatDate(v.visitedAt)}</small></td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                ) : (
+                  <p className={styles.msg}>No visitor data yet</p>
+                )}
+              </div>
+            </div>
+          ) : (
+            <p className={styles.msg}>Failed to load analytics</p>
+          )}
         </>
       )}
     </div>

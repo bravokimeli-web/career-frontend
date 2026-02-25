@@ -22,7 +22,7 @@ import Privacy   from './pages/Privacy'
 import Terms     from './pages/Terms'
 import Cookies   from './pages/Cookies'
 import NotFound  from './pages/NotFound'
-import { authService } from './services/api'
+import { authService, dashboardService } from './services/api'
 
 const PAGE_TITLES = {
   dashboard:    'Dashboard',
@@ -56,6 +56,36 @@ function AppShell() {
   const [verifiedMessage, setVerifiedMessage] = useState(null)
   const [resendStatus, setResendStatus] = useState('')
   const { user: authUser, logout, refreshUser } = useAuth()
+  const startTime = useCallback(() => Date.now(), [])
+  const [pageStartTime, setPageStartTime] = useState(startTime())
+
+  // Track page visits
+  useEffect(() => {
+    setPageStartTime(startTime())
+    const sessionId = sessionStorage.getItem('careerstart_session_id') || 
+                     (sessionStorage.setItem('careerstart_session_id', Math.random().toString(36).substr(2, 9)), 
+                      sessionStorage.getItem('careerstart_session_id'))
+    
+    // Track on route change
+    dashboardService.trackPageVisit({
+      page: activeNav,
+      sessionId,
+      timeSpent: 0,
+    }).catch(() => {}) // Ignore tracking errors
+  }, [activeNav, startTime])
+
+  // Track time spent before leaving page
+  useEffect(() => {
+    return () => {
+      const timeSpent = Math.floor((Date.now() - pageStartTime) / 1000)
+      const sessionId = sessionStorage.getItem('careerstart_session_id')
+      dashboardService.trackPageVisit({
+        page: activeNav,
+        sessionId,
+        timeSpent,
+      }).catch(() => {}) // Ignore tracking errors
+    }
+  }, [activeNav, pageStartTime])
 
   const handleResendVerification = async () => {
     if (resendStatus === 'sending') return
@@ -156,6 +186,20 @@ function AppShell() {
 function LandingRoute() {
   const { user, loading } = useAuth()
   const navigate = useNavigate()
+
+  // Track landing page visit
+  useEffect(() => {
+    const sessionId = sessionStorage.getItem('careerstart_session_id') || 
+                     (sessionStorage.setItem('careerstart_session_id', Math.random().toString(36).substr(2, 9)), 
+                      sessionStorage.getItem('careerstart_session_id'))
+    
+    dashboardService.trackPageVisit({
+      page: 'landing',
+      sessionId,
+      timeSpent: 0,
+    }).catch(() => {})
+  }, [])
+
   if (loading) {
     return (
       <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'var(--bg)', color: 'var(--text2)' }}>

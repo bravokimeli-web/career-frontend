@@ -77,6 +77,9 @@ export const dashboardService = {
   getStats:    ()       => api.get('/dashboard/stats'),
   getActivity: (limit) => api.get('/dashboard/activity', { params: { limit } }),
   getApplicationsStatus: (params) => api.get('/dashboard/applications-status', { params }),
+  trackPageVisit: (data) => api.post('/dashboard/track-visit', data),
+  getAnalytics: (params) => api.get('/dashboard/analytics', { params }),
+  getVisitors: (params) => api.get('/dashboard/visitors', { params }),
 }
 
 // ══════════════════════════════════════════════════════════════
