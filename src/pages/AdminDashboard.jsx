@@ -538,8 +538,8 @@ export default function AdminDashboard() {
                         <td>{r.clicks || 0}</td>
                         <td><small className={styles.timestamp}>{formatDateShort(r.createdAt)}</small></td>
                         <td>
-                          <a href={`/?ref=${r.code}`}>
-                            /?ref={r.code}
+                          <a href={`/app/browse?ref=${r.code}`}>
+                            /app/browse?ref={r.code}
                           </a>
                         </td>
                         <td>
@@ -547,7 +547,7 @@ export default function AdminDashboard() {
                             type="button"
                             className={styles.linkBtn}
                             onClick={() => {
-                              const url = `${window.location.origin}/?ref=${r.code}`
+                              const url = `${window.location.origin}/app/browse?ref=${r.code}`
                               navigator.clipboard.writeText(url).then(() => alert('Copied!'))
                             }}
                           >Copy</button>
