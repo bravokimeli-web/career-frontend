@@ -38,6 +38,9 @@
 .messagesTable td { vertical-align: top; }
 .messagesTable .unread { font-weight: 600; }
 .timestamp { color: var(--text2); font-size: 12px; }
+
+/* Messages page button */
+.messagesTable td button { padding: 4px 8px; font-size: 13px; }
 .mpesaSent { text-align: center; }
 .mpesaSentText { font-size: 15px; color: var(--text); margin-bottom: 8px; }
 .mpesaSentHint { font-size: 13px; color: var(--text2); margin-bottom: 20px; }

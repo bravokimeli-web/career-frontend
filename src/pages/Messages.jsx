@@ -28,6 +28,7 @@ export default function Messages() {
                 <th>Date</th>
                 <th>Subject</th>
                 <th>Message</th>
+                <th />
               </tr>
             </thead>
             <tbody>
@@ -36,6 +37,20 @@ export default function Messages() {
                   <td><small className={styles.timestamp}>{new Date(msg.sentAt || msg.createdAt).toLocaleString()}</small></td>
                   <td>{msg.subject}</td>
                   <td>{msg.content}</td>
+                  <td>
+                    {!msg.read && (
+                      <button
+                        type="button"
+                        className={styles.btnSecondary}
+                        onClick={async () => {
+                          try {
+                            await messageService.markRead(msg._id)
+                            setList(lst => lst.map(m => m._id === msg._id ? { ...m, read: true } : m))
+                          } catch {}
+                        }}
+                      >Mark as read</button>
+                    )}
+                  </td>
                 </tr>
               ))}
             </tbody>
