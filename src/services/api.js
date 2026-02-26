@@ -81,6 +81,8 @@ export const dashboardService = {
   getAnalytics: (params) => api.get('/dashboard/analytics', { params }),
   getVisitors: (params) => api.get('/dashboard/visitors', { params }),
   sendEncouragementEmail: (userId) => api.post(`/dashboard/send-encouragement/${userId}`),
+  getReferrals: () => api.get('/dashboard/referrals'),
+  createReferral: (data) => api.post('/dashboard/referrals', data),
 }
 
 // ══════════════════════════════════════════════════════════════
