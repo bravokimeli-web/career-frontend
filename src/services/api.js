@@ -83,6 +83,8 @@ export const dashboardService = {
   sendEncouragementEmail: (userId) => api.post(`/dashboard/send-encouragement/${userId}`),
   getReferrals: () => api.get('/dashboard/referrals'),
   createReferral: (data) => api.post('/dashboard/referrals', data),
+  // fetch users referred by a code (optionally export=csv via params)
+  getReferralUsers: (code, params) => api.get(`/dashboard/referrals/${code}/users`, { params }),
 }
 
 // ══════════════════════════════════════════════════════════════

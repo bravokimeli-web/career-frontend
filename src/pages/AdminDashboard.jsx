@@ -38,6 +38,10 @@ export default function AdminDashboard() {
   // referrals
   const [referrals, setReferrals] = useState([])
   const [referralLoading, setReferralLoading] = useState(false)
+  const [referralUsers, setReferralUsers] = useState([])
+  const [usersLoading, setUsersLoading] = useState(false)
+  const [currentReferral, setCurrentReferral] = useState(null)
+  const [showUsersModal, setShowUsersModal] = useState(false)
 
   useEffect(() => {
     dashboardService.getStats()
@@ -107,6 +111,17 @@ export default function AdminDashboard() {
     loadReferrals()
   }, [tab])
 
+  const loadReferralUsers = (code) => {
+    setUsersLoading(true)
+    setCurrentReferral(code)
+    dashboardService.getReferralUsers(code)
+      .then(res => setReferralUsers(res.data.users || []))
+      .catch(() => setReferralUsers([]))
+      .finally(() => {
+        setUsersLoading(false)
+        setShowUsersModal(true)
+      })
+  }
 
   const handleCreateOrUpdate = (e) => {
     e.preventDefault()
@@ -539,8 +554,11 @@ export default function AdminDashboard() {
                       <th>Code</th>
                       <th>Description</th>
                       <th>Clicks</th>
+                      <th>Signups</th>
+                      <th>Applications</th>
                       <th>Created</th>
                       <th>URL</th>
+                      <th />
                       <th />
                     </tr>
                   </thead>
@@ -550,6 +568,8 @@ export default function AdminDashboard() {
                         <td>{r.code}</td>
                         <td>{r.description || '—'}</td>
                         <td>{r.clicks || 0}</td>
+                        <td>{r.signupCount || 0}</td>
+                        <td>{r.applicationsCount || 0}</td>
                         <td><small className={styles.timestamp}>{formatDateShort(r.createdAt)}</small></td>
                         <td>
                           <a href={`/app/browse?ref=${r.code}`}>
@@ -566,6 +586,13 @@ export default function AdminDashboard() {
                             }}
                           >Copy</button>
                         </td>
+                        <td>
+                          <button
+                            type="button"
+                            className={styles.linkBtn}
+                            onClick={() => loadReferralUsers(r.code)}
+                          >Users</button>
+                        </td>
                       </tr>
                     ))}
                   </tbody>
@@ -576,6 +603,40 @@ export default function AdminDashboard() {
         )
       )}
 
+      {showUsersModal && (
+        <div className={styles.usersModalOverlay} onClick={() => setShowUsersModal(false)}>
+          <div className={styles.usersModal} onClick={e => e.stopPropagation()}>
+            <h3>Users from referral {currentReferral}</h3>
+            {usersLoading ? (
+              <p className={styles.msg}>Loading…</p>
+            ) : referralUsers.length > 0 ? (
+              <table>
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Joined</th>
+                    <th>Applied?</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {referralUsers.map(u => (
+                    <tr key={u.email}>
+                      <td>{u.name}</td>
+                      <td>{u.email}</td>
+                      <td><small className={styles.timestamp}>{new Date(u.joinedAt).toLocaleDateString()}</small></td>
+                      <td>{u.applied ? 'yes' : 'no'}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            ) : (
+              <p className={styles.msg}>No users have signed up with this code yet.</p>
+            )}
+            <button className={styles.closeBtn} onClick={() => setShowUsersModal(false)}>Close</button>
+          </div>
+        </div>
+      )}
       </div>
     )
 }
