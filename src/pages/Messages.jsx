@@ -21,7 +21,26 @@ export default function Messages() {
       ) : list.length === 0 ? (
         <p className={styles.msg}>No messages yet. When recruiters contact you, they’ll appear here.</p>
       ) : (
-        <p className={styles.msg}>You have {list.length} message(s).</p>
+        <div className={styles.tableWrap}>
+          <table className={`${styles.table} ${styles.messagesTable}`}> 
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Subject</th>
+                <th>Message</th>
+              </tr>
+            </thead>
+            <tbody>
+              {list.map(msg => (
+                <tr key={msg._id} className={!msg.read ? styles.unread : ''}>
+                  <td><small className={styles.timestamp}>{new Date(msg.sentAt || msg.createdAt).toLocaleString()}</small></td>
+                  <td>{msg.subject}</td>
+                  <td>{msg.content}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       )}
     </div>
   )
