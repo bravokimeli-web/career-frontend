@@ -24,7 +24,6 @@ import AdminDashboard from './pages/AdminDashboard'
 import Privacy   from './pages/Privacy'
 import Terms     from './pages/Terms'
 import Cookies   from './pages/Cookies'
-import PromoRedirect from './pages/PromoRedirect'
 import NotFound  from './pages/NotFound'
 import { authService, dashboardService } from './services/api'
 
@@ -63,18 +62,6 @@ function AppShell() {
   const startTime = useCallback(() => Date.now(), [])
   const [pageStartTime, setPageStartTime] = useState(startTime())
 
-  // Handle promo code query parameter (store for session)
-  useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const promo = params.get('promo');
-    if (promo) {
-      sessionStorage.setItem('promoCode', promo);
-      // remove from URL so it doesn't persist on navigation
-      const url = new URL(window.location.href);
-      url.searchParams.delete('promo');
-      window.history.replaceState({}, '', url);
-    }
-  }, []);
 
   // Track page visits
   useEffect(() => {
@@ -82,13 +69,11 @@ function AppShell() {
     const sessionId = sessionStorage.getItem('careerstart_session_id') || 
                      (sessionStorage.setItem('careerstart_session_id', Math.random().toString(36).substr(2, 9)), 
                       sessionStorage.getItem('careerstart_session_id'))
-    const promo = sessionStorage.getItem('promoCode') || null;
     // Track on route change
     dashboardService.trackPageVisit({
       page: activeNav,
       sessionId,
       timeSpent: 0,
-      promoCode: promo,
     }).catch(() => {}) // Ignore tracking errors
   }, [activeNav, startTime])
 
@@ -210,22 +195,10 @@ function LandingRoute() {
     const sessionId = sessionStorage.getItem('careerstart_session_id') || 
                      (sessionStorage.setItem('careerstart_session_id', Math.random().toString(36).substr(2, 9)), 
                       sessionStorage.getItem('careerstart_session_id'))
-    const params = new URLSearchParams(window.location.search);
-    const promo = params.get('promo');
-    if (promo) {
-      sessionStorage.setItem('promoCode', promo);
-      // remove query param to keep URL clean
-      const url = new URL(window.location.href);
-      url.searchParams.delete('promo');
-      window.history.replaceState({}, '', url);
-    }
-    const promoCode = sessionStorage.getItem('promoCode') || null;
-
     dashboardService.trackPageVisit({
       page: 'landing',
       sessionId,
       timeSpent: 0,
-      promoCode,
     }).catch(() => {})
   }, [])
 
@@ -306,7 +279,6 @@ export default function App() {
             <Route path="/cookies" element={<Cookies />} />
             <Route path="/app" element={<Navigate to="/app/dashboard" replace />} />
             <Route path="/app/:page" element={<AppRoute />} />
-            <Route path="/r/:code" element={<PromoRedirect />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
