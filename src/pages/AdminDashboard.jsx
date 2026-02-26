@@ -446,7 +446,57 @@ export default function AdminDashboard() {
                 ) : (
                   <p className={styles.msg}>No data yet</p>
                 )}
+              <div className={styles.section}>
+                <h3 className={styles.sectionTitle}>Page Visitors</h3>
+                <div className={styles.filterRow}>
+                  <select
+                    className={styles.filter}
+                    value={visitorFilter}
+                    onChange={(e) => setVisitorFilter(e.target.value)}
+                  >
+                    <option value="all">All visitors</option>
+                    <option value="anonymous">Anonymous visitors</option>
+                    <option value="logged-in">Logged-in users</option>
+                    <option value="not-applied">Users who didn't apply</option>
+                  </select>
+                </div>
+                {visitors && visitors.length > 0 ? (
+                  <div className={styles.tableWrapper}>
+                    <table className={styles.table}>
+                      <thead>
+                        <tr>
+                          <th>User</th>
+                          <th>Email</th>
+                          <th>Page</th>
+                          <th>Promo</th>
+                          <th>Time Spent (s)</th>
+                          <th>Visit Time</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {visitors.map(v => (
+                          <tr key={v._id}>
+                            <td className={styles.applicantName}>{v.userName}</td>
+                            <td>{v.userEmail}</td>
+                            <td><span className={styles.badge}>{v.page}</span></td>
+                            <td>{v.promoCode || '—'}</td>
+                            <td>{v.timeSpent}s</td>
+                            <td><small className={styles.timestamp}>{formatDate(v.visitedAt)}</small></td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                ) : (
+                  <p className={styles.msg}>No visitor data yet</p>
+                )}
               </div>
+            </div>
+          ) : (
+            <p className={styles.msg}>Failed to load analytics</p>
+          )}
+        </>
+      )}
 
       {tab === 'promo' && (
         <>
@@ -499,57 +549,6 @@ export default function AdminDashboard() {
                 </tbody>
               </table>
             </div>
-          )}
-        </>
-      )}
-              <div className={styles.section}>
-                <h3 className={styles.sectionTitle}>Page Visitors</h3>
-                <div className={styles.filterRow}>
-                  <select
-                    className={styles.filter}
-                    value={visitorFilter}
-                    onChange={(e) => setVisitorFilter(e.target.value)}
-                  >
-                    <option value="all">All visitors</option>
-                    <option value="anonymous">Anonymous visitors</option>
-                    <option value="logged-in">Logged-in users</option>
-                    <option value="not-applied">Users who didn't apply</option>
-                  </select>
-                </div>
-                {visitors && visitors.length > 0 ? (
-                  <div className={styles.tableWrapper}>
-                    <table className={styles.table}>
-                      <thead>
-                        <tr>
-                          <th>User</th>
-                          <th>Email</th>
-                          <th>Page</th>
-                          <th>Promo</th>
-                          <th>Time Spent (s)</th>
-                          <th>Visit Time</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {visitors.map(v => (
-                          <tr key={v._id}>
-                            <td className={styles.applicantName}>{v.userName}</td>
-                            <td>{v.userEmail}</td>
-                            <td><span className={styles.badge}>{v.page}</span></td>
-                            <td>{v.promoCode || '—'}</td>
-                            <td>{v.timeSpent}s</td>
-                            <td><small className={styles.timestamp}>{formatDate(v.visitedAt)}</small></td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </div>
-                ) : (
-                  <p className={styles.msg}>No visitor data yet</p>
-                )}
-              </div>
-            </div>
-          ) : (
-            <p className={styles.msg}>Failed to load analytics</p>
           )}
         </>
       )}
