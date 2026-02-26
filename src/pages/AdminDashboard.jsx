@@ -538,7 +538,7 @@ export default function AdminDashboard() {
                         <td>{r.clicks || 0}</td>
                         <td><small className={styles.timestamp}>{formatDateShort(r.createdAt)}</small></td>
                         <td>
-                          <a href={`/?ref=${r.code}`} target="_blank" rel="noopener noreferrer">
+                          <a href={`/?ref=${r.code}`}>
                             /?ref={r.code}
                           </a>
                         </td>
