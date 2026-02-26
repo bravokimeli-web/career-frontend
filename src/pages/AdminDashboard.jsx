@@ -87,10 +87,24 @@ export default function AdminDashboard() {
   useEffect(() => {
     if (tab !== 'referrals') return
     setReferralLoading(true)
-    dashboardService.getReferrals()
-      .then(res => setReferrals(res.data.referrals || []))
-      .catch(() => setReferrals([]))
-      .finally(() => setReferralLoading(false))
+    // Guard against missing service method in older/deployed bundles
+    const loadReferrals = async () => {
+      if (!dashboardService || typeof dashboardService.getReferrals !== 'function') {
+        console.error('dashboardService.getReferrals is not available')
+        setReferrals([])
+        setReferralLoading(false)
+        return
+      }
+      try {
+        const res = await dashboardService.getReferrals()
+        setReferrals(res.data.referrals || [])
+      } catch (err) {
+        setReferrals([])
+      } finally {
+        setReferralLoading(false)
+      }
+    }
+    loadReferrals()
   }, [tab])
 
 
