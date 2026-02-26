@@ -610,7 +610,11 @@ export default function AdminDashboard() {
             {usersLoading ? (
               <p className={styles.msg}>Loading…</p>
             ) : referralUsers.length > 0 ? (
-              <table>
+              <>
+                <div style={{ marginBottom: 12 }}>
+                  <a href={`/dashboard/referrals/${currentReferral}/users?export=csv`} target="_blank" rel="noopener noreferrer" className={styles.linkBtn}>Download CSV</a>
+                </div>
+                <table>
                 <thead>
                   <tr>
                     <th>Name</th>
@@ -630,6 +634,7 @@ export default function AdminDashboard() {
                   ))}
                 </tbody>
               </table>
+            </>  
             ) : (
               <p className={styles.msg}>No users have signed up with this code yet.</p>
             )}
