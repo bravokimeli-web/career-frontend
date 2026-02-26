@@ -34,6 +34,8 @@ export default function AdminDashboard() {
   const [analyticsLoading, setAnalyticsLoading] = useState(false)
   const [visitorFilter, setVisitorFilter] = useState('all') // all | anonymous | logged-in | not-applied
   const [sendingEncouragement, setSendingEncouragement] = useState(null)
+  const [promoLinks, setPromoLinks] = useState([])
+  const [promoLoading, setPromoLoading] = useState(false)
 
   useEffect(() => {
     dashboardService.getStats()
@@ -78,6 +80,16 @@ export default function AdminDashboard() {
       .catch(() => setVisitors([]))
       .finally(() => setAnalyticsLoading(false))
   }, [tab, visitorFilter])
+
+  // Load promo links when promo tab is opened
+  useEffect(() => {
+    if (tab !== 'promo') return
+    setPromoLoading(true)
+    dashboardService.getPromoLinks()
+      .then(res => setPromoLinks(res.data.links || []))
+      .catch(() => setPromoLinks([]))
+      .finally(() => setPromoLoading(false))
+  }, [tab])
 
   const handleCreateOrUpdate = (e) => {
     e.preventDefault()
@@ -159,6 +171,16 @@ export default function AdminDashboard() {
       .finally(() => setSendingEncouragement(null))
   }
 
+  const handleCreatePromo = () => {
+    const description = window.prompt('Optional description for this link (e.g. "Twitter campaign")');
+    dashboardService.createPromoLink(description || '')
+      .then(res => {
+        setPromoLinks(prev => [res.data.link, ...prev]);
+        alert('Promo link generated. Copy it from the list below.');
+      })
+      .catch(err => alert(err.response?.data?.message || 'Failed to create promo link'))
+  }
+
   if (loading && !stats) {
     return <div className={styles.content}><p className={styles.msg}>Loading…</p></div>
   }
@@ -171,6 +193,7 @@ export default function AdminDashboard() {
         <button type="button" className={tab === 'opportunities' ? styles.tabActive : styles.tab} onClick={() => setTab('opportunities')}>Opportunities</button>
         <button type="button" className={tab === 'applications' ? styles.tabActive : styles.tab} onClick={() => setTab('applications')}>Applications</button>
         <button type="button" className={tab === 'analytics' ? styles.tabActive : styles.tab} onClick={() => setTab('analytics')}>Analytics</button>
+        <button type="button" className={tab === 'promo' ? styles.tabActive : styles.tab} onClick={() => setTab('promo')}>Promo Links</button>
       </div>
 
       {tab === 'overview' && stats && (
@@ -425,6 +448,60 @@ export default function AdminDashboard() {
                 )}
               </div>
 
+      {tab === 'promo' && (
+        <>
+          <div className={styles.toolbar}>
+            <button type="button" className={styles.btnPrimary} onClick={handleCreatePromo}>
+              + Generate link
+            </button>
+          </div>
+          {promoLoading ? (
+            <p className={styles.msg}>Loading links…</p>
+          ) : promoLinks.length === 0 ? (
+            <p className={styles.msg}>No promo links created yet</p>
+          ) : (
+            <div className={styles.tableWrap}>
+              <table className={styles.table}>
+                <thead>
+                  <tr>
+                    <th>Code</th>
+                    <th>Description</th>
+                    <th>Clicks</th>
+                    <th>Created</th>
+                    <th>URL</th>
+                    <th />
+                  </tr>
+                </thead>
+                <tbody>
+                  {promoLinks.map(link => (
+                    <tr key={link._id}>
+                      <td>{link.code}</td>
+                      <td>{link.description || '—'}</td>
+                      <td>{link.clicks || 0}</td>
+                      <td><small className={styles.timestamp}>{formatDateShort(link.createdAt)}</small></td>
+                      <td>
+                        <a href={`/r/${link.code}`} target="_blank" rel="noopener noreferrer">
+                          /r/{link.code}
+                        </a>
+                      </td>
+                      <td>
+                        <button
+                          type="button"
+                          className={styles.linkBtn}
+                          onClick={() => {
+                            const url = `${window.location.origin}/r/${link.code}`
+                            navigator.clipboard.writeText(url).then(() => alert('Copied!'))
+                          }}
+                        >Copy</button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
+        </>
+      )}
               <div className={styles.section}>
                 <h3 className={styles.sectionTitle}>Page Visitors</h3>
                 <div className={styles.filterRow}>
@@ -447,6 +524,7 @@ export default function AdminDashboard() {
                           <th>User</th>
                           <th>Email</th>
                           <th>Page</th>
+                          <th>Promo</th>
                           <th>Time Spent (s)</th>
                           <th>Visit Time</th>
                         </tr>
@@ -457,6 +535,7 @@ export default function AdminDashboard() {
                             <td className={styles.applicantName}>{v.userName}</td>
                             <td>{v.userEmail}</td>
                             <td><span className={styles.badge}>{v.page}</span></td>
+                            <td>{v.promoCode || '—'}</td>
                             <td>{v.timeSpent}s</td>
                             <td><small className={styles.timestamp}>{formatDate(v.visitedAt)}</small></td>
                           </tr>

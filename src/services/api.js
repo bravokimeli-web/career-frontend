@@ -81,6 +81,9 @@ export const dashboardService = {
   getAnalytics: (params) => api.get('/dashboard/analytics', { params }),
   getVisitors: (params) => api.get('/dashboard/visitors', { params }),
   sendEncouragementEmail: (userId) => api.post(`/dashboard/send-encouragement/${userId}`),
+  // promo link management
+  createPromoLink: (description) => api.post('/dashboard/promo', { description }),
+  getPromoLinks: () => api.get('/dashboard/promo'),
 }
 
 // ══════════════════════════════════════════════════════════════
