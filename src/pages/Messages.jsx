@@ -36,7 +36,7 @@ export default function Messages() {
                 <tr key={msg._id} className={!msg.read ? styles.unread : ''}>
                   <td><small className={styles.timestamp}>{new Date(msg.sentAt || msg.createdAt).toLocaleString()}</small></td>
                   <td>{msg.subject}</td>
-                  <td>{msg.content}</td>
+                  <td>{msg.content.replace(/^Manual reminder sent by admin\.\s*/i, '')}</td>
                   <td>
                     {!msg.read && (
                       <button
