@@ -553,7 +553,7 @@ export default function AdminDashboard() {
                         <td><small className={styles.timestamp}>{formatDateShort(r.createdAt)}</small></td>
                         <td>
                           <a href={`/app/browse?ref=${r.code}`}>
-                            /app/browse?ref={r.code}
+                            {`/app/browse?ref=${r.code}`}
                           </a>
                         </td>
                         <td>

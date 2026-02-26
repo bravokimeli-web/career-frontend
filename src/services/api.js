@@ -60,7 +60,7 @@ api.interceptors.response.use(
 export const authService = {
   register:        (data)        => api.post('/auth/register', data),
   login:           (credentials) => api.post('/auth/login', credentials),
-  loginGoogle:     (idToken, role) => api.post('/auth/google', { idToken, role }),
+  loginGoogle:     (idToken, role, referral) => api.post('/auth/google', { idToken, role, referral }),
   logout:          ()            => api.post('/auth/logout'),
   me:              ()            => api.get('/auth/me'),
   refresh:         ()            => api.post('/auth/refresh'),
@@ -113,6 +113,11 @@ export const applicationService = {
     const form = new FormData();
     if (payload.opportunityId != null) form.append('opportunityId', payload.opportunityId);
     if (payload.coverLetter != null) form.append('coverLetter', payload.coverLetter);
+    // attach referral code from sessionStorage if present
+    try {
+      const ref = sessionStorage.getItem('careerstart_referral')
+      if (ref) form.append('referral', ref)
+    } catch (e) {}
     const resumeFile = payload.resume;
     if (resumeFile && (resumeFile instanceof File || resumeFile instanceof Blob)) {
       form.append('resume', resumeFile, resumeFile instanceof File ? resumeFile.name : 'resume');

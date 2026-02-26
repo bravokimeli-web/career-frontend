@@ -40,7 +40,10 @@ export function AuthProvider({ children }) {
   }
 
   const register = async (data) => {
-    const res = await authService.register(data)
+    // Attach referral code from sessionStorage if present
+    const ref = sessionStorage.getItem('careerstart_referral')
+    const payload = { ...data, ...(ref ? { referral: ref } : {}) }
+    const res = await authService.register(payload)
     // OTP flow: no token until verify-email succeeds
     if (res.data.token) {
       localStorage.setItem('careerstart_token', res.data.token)
@@ -59,7 +62,9 @@ export function AuthProvider({ children }) {
   }
 
   const loginWithGoogle = async (idToken, role) => {
-    const res = await authService.loginGoogle(idToken, role)
+    const ref = sessionStorage.getItem('careerstart_referral')
+    const payload = { idToken, role, ...(ref ? { referral: ref } : {}) }
+    const res = await authService.loginGoogle(payload.idToken, payload.role ? payload.role : undefined, payload.referral)
     if (res.data.token) localStorage.setItem('careerstart_token', res.data.token)
     setUser(res.data.user)
     return res.data
