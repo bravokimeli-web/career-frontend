@@ -35,6 +35,10 @@ export default function AdminDashboard() {
   const [visitorFilter, setVisitorFilter] = useState('all') // all | anonymous | logged-in | not-applied
   const [sendingEncouragement, setSendingEncouragement] = useState(null)
 
+  // referrals
+  const [referrals, setReferrals] = useState([])
+  const [referralLoading, setReferralLoading] = useState(false)
+
   useEffect(() => {
     dashboardService.getStats()
       .then(res => setStats(res.data))
@@ -78,6 +82,16 @@ export default function AdminDashboard() {
       .catch(() => setVisitors([]))
       .finally(() => setAnalyticsLoading(false))
   }, [tab, visitorFilter])
+
+  // Load referrals data when referrals tab is opened
+  useEffect(() => {
+    if (tab !== 'referrals') return
+    setReferralLoading(true)
+    dashboardService.getReferrals()
+      .then(res => setReferrals(res.data.referrals || []))
+      .catch(() => setReferrals([]))
+      .finally(() => setReferralLoading(false))
+  }, [tab])
 
 
   const handleCreateOrUpdate = (e) => {
@@ -160,6 +174,18 @@ export default function AdminDashboard() {
       .finally(() => setSendingEncouragement(null))
   }
 
+  const handleCreateReferral = () => {
+    const desc = window.prompt('Description for this referral code (optional)') || '';
+    if (desc === null) return;
+    setReferralLoading(true);
+    dashboardService.createReferral({ description: desc })
+      .then(res => {
+        setReferrals(prev => [res.data.referral, ...(prev || [])]);
+      })
+      .catch(() => {})
+      .finally(() => setReferralLoading(false));
+  };
+
 
   if (loading && !stats) {
     return <div className={styles.content}><p className={styles.msg}>Loading…</p></div>
@@ -173,6 +199,7 @@ export default function AdminDashboard() {
         <button type="button" className={tab === 'opportunities' ? styles.tabActive : styles.tab} onClick={() => setTab('opportunities')}>Opportunities</button>
         <button type="button" className={tab === 'applications' ? styles.tabActive : styles.tab} onClick={() => setTab('applications')}>Applications</button>
         <button type="button" className={tab === 'analytics' ? styles.tabActive : styles.tab} onClick={() => setTab('analytics')}>Analytics</button>
+        <button type="button" className={tab === 'referrals' ? styles.tabActive : styles.tab} onClick={() => setTab('referrals')}>Referrals</button>
       </div>
 
       {tab === 'overview' && stats && (
@@ -447,6 +474,7 @@ export default function AdminDashboard() {
                           <th>User</th>
                           <th>Email</th>
                           <th>Page</th>
+                          <th>Referral</th>
                           <th>Time Spent (s)</th>
                           <th>Visit Time</th>
                         </tr>
@@ -457,6 +485,7 @@ export default function AdminDashboard() {
                             <td className={styles.applicantName}>{v.userName}</td>
                             <td>{v.userEmail}</td>
                             <td><span className={styles.badge}>{v.page}</span></td>
+                            <td>{v.referral || '—'}</td>
                             <td>{v.timeSpent}s</td>
                             <td><small className={styles.timestamp}>{formatDate(v.visitedAt)}</small></td>
                           </tr>
@@ -473,6 +502,66 @@ export default function AdminDashboard() {
             <p className={styles.msg}>Failed to load analytics</p>
           )
         )}
+
+      {tab === 'referrals' && (
+        referralLoading ? (
+          <p className={styles.msg}>Loading referrals…</p>
+        ) : (
+          <>
+            <div className={styles.toolbar}>
+              <button type="button" className={styles.btnPrimary} onClick={handleCreateReferral}>
+                + New referral code
+              </button>
+            </div>
+            {referralLoading ? (
+              <p className={styles.msg}>Loading referrals…</p>
+            ) : referrals.length === 0 ? (
+              <p className={styles.msg}>No referral codes created yet</p>
+            ) : (
+              <div className={styles.tableWrap}>
+                <table className={styles.table}>
+                  <thead>
+                    <tr>
+                      <th>Code</th>
+                      <th>Description</th>
+                      <th>Clicks</th>
+                      <th>Created</th>
+                      <th>URL</th>
+                      <th />
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {referrals.map(r => (
+                      <tr key={r._id}>
+                        <td>{r.code}</td>
+                        <td>{r.description || '—'}</td>
+                        <td>{r.clicks || 0}</td>
+                        <td><small className={styles.timestamp}>{formatDateShort(r.createdAt)}</small></td>
+                        <td>
+                          <a href={`/?ref=${r.code}`} target="_blank" rel="noopener noreferrer">
+                            /?ref={r.code}
+                          </a>
+                        </td>
+                        <td>
+                          <button
+                            type="button"
+                            className={styles.linkBtn}
+                            onClick={() => {
+                              const url = `${window.location.origin}/?ref=${r.code}`
+                              navigator.clipboard.writeText(url).then(() => alert('Copied!'))
+                            }}
+                          >Copy</button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+          </>
+        )
+      )}
+
       </div>
     )
 }

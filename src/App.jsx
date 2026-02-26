@@ -63,17 +63,31 @@ function AppShell() {
   const [pageStartTime, setPageStartTime] = useState(startTime())
 
 
+  // capture referral from query string once and persist
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const ref = params.get('ref');
+    if (ref) {
+      sessionStorage.setItem('careerstart_referral', ref);
+      // also clean url to avoid duplicates
+      params.delete('ref');
+      window.history.replaceState({}, '', window.location.pathname + (params.toString() ? '?' + params.toString() : ''));
+    }
+  }, []);
+
   // Track page visits
   useEffect(() => {
     setPageStartTime(startTime())
     const sessionId = sessionStorage.getItem('careerstart_session_id') || 
                      (sessionStorage.setItem('careerstart_session_id', Math.random().toString(36).substr(2, 9)), 
                       sessionStorage.getItem('careerstart_session_id'))
+    const referral = sessionStorage.getItem('careerstart_referral') || null;
     // Track on route change
     dashboardService.trackPageVisit({
       page: activeNav,
       sessionId,
       timeSpent: 0,
+      referral,
     }).catch(() => {}) // Ignore tracking errors
   }, [activeNav, startTime])
 
