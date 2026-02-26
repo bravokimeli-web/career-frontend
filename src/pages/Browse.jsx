@@ -128,6 +128,11 @@ export default function Browse() {
 
   const getInitials = (company) => (company || '??').slice(0, 2).toUpperCase()
 
+  // description text shown at the top of the browse page; uses total if known
+  const introDescription = total > 0
+    ? `Discover ${total} verified opportunities from Kenya's leading companies.`
+    : 'Discover verified opportunities from Kenya\'s leading companies.'
+
   return (
     <div className={styles.content}>
       {applyOpportunity && (
@@ -151,7 +156,7 @@ export default function Browse() {
         <meta itemProp="name" content="Browse Opportunities" />
         <h1 className={styles.heading} itemProp="headline">Browse Verified Internship & Industrial Attachment Opportunities</h1>
         <p className={styles.intro} itemProp="description">
-          Discover 250+ verified opportunities from Kenya's leading companies. Filter by type (internships vs industrial attachments) and location, then apply in minutes. 
+          {introDescription}{' '}Filter by type (internships vs industrial attachments) and location, then apply in minutes. 
           CareerStart connects you with quality placements that match your skills and career goals.
         </p>
       </section>
