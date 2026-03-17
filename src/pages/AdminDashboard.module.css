@@ -59,7 +59,26 @@
 .reminderBtn:hover { color: var(--accent); border-color: var(--accent); }
 .reminderBtn:disabled { opacity: 0.6; cursor: not-allowed; }
 
+
 .encouragementBtn { padding: 6px 12px; font-size: 12px; background: transparent; color: var(--text2); border: 1px solid var(--border); border-radius: var(--radius-sm); cursor: pointer; font-family: inherit; }
 .encouragementBtn:hover { color: var(--accent); border-color: var(--accent); }
 .encouragementBtn:disabled { opacity: 0.6; cursor: not-allowed; }
 .reminderBtn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+/* modal for referral users list */
+.usersModalOverlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.4); display: flex; align-items: center; justify-content: center; z-index: 999; }
+.usersModal { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; max-width: 600px; max-height: 80vh; overflow-y: auto; }
+.usersModal table { width: 100%; border-collapse: collapse; }
+.usersModal th, .usersModal td { padding: 8px 12px; border-bottom: 1px solid var(--border); }
+.usersModal th { text-align: left; font-weight: 600; }
+.usersModal .closeBtn { margin-top: 16px; padding: 8px 16px; background: var(--accent); color: var(--on-accent); border: none; border-radius: var(--radius-sm); cursor: pointer; }
+.usersModal .closeBtn:hover { opacity: 0.9; }
+
+/* modal for cover letter */
+.modalOverlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.4); display: flex; align-items: center; justify-content: center; z-index: 999; }
+.modal { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; max-width: 600px; max-height: 80vh; overflow-y: auto; }
+.modal h3 { margin: 0 0 16px 0; font-size: 18px; color: var(--text); }
+.modal p { margin: 8px 0; font-size: 14px; color: var(--text); }
+.coverLetterText { background: var(--surface2); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 16px; margin: 16px 0; white-space: pre-wrap; font-family: inherit; font-size: 14px; color: var(--text); max-height: 300px; overflow-y: auto; }
+.modal .closeBtn { margin-top: 16px; padding: 8px 16px; background: var(--accent); color: var(--on-accent); border: none; border-radius: var(--radius-sm); cursor: pointer; }
+.modal .closeBtn:hover { opacity: 0.9; }

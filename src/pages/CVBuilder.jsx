@@ -65,10 +65,10 @@ export default function CVBuilder() {
         <div className={styles.formSection}>
           <div className={styles.card}>
             <h3 className={styles.cardTitle}>Personal</h3>
-            <label className={styles.label}>Full name <input className={styles.input} value={name} onChange={e => setName(e.target.value)} placeholder="Your name" /></label>
-            <label className={styles.label}>Email <input type="email" className={styles.input} value={email} onChange={e => setEmail(e.target.value)} placeholder="you@example.com" /></label>
-            <label className={styles.label}>Phone <input className={styles.input} value={phone} onChange={e => setPhone(e.target.value)} placeholder="+254..." /></label>
-            <label className={styles.label}>Summary <textarea className={styles.textarea} value={summary} onChange={e => setSummary(e.target.value)} placeholder="Short professional summary" rows={3} /></label>
+            <label className={styles.label}>Full name <input name="name" className={styles.input} value={name} onChange={e => setName(e.target.value)} placeholder="Your name" /></label>
+            <label className={styles.label}>Email <input name="email" type="email" className={styles.input} value={email} onChange={e => setEmail(e.target.value)} placeholder="you@example.com" /></label>
+            <label className={styles.label}>Phone <input name="phone" className={styles.input} value={phone} onChange={e => setPhone(e.target.value)} placeholder="+254..." /></label>
+            <label className={styles.label}>Summary <textarea name="summary" className={styles.textarea} value={summary} onChange={e => setSummary(e.target.value)} placeholder="Short professional summary" rows={3} /></label>
           </div>
 
           <div className={styles.card}>
@@ -104,7 +104,7 @@ export default function CVBuilder() {
 
           <div className={styles.card}>
             <h3 className={styles.cardTitle}>Skills</h3>
-            <label className={styles.label}>List skills (one per line or comma-separated) <textarea className={styles.textarea} value={skills} onChange={e => setSkills(e.target.value)} placeholder="e.g. Python, React, Excel" rows={4} /></label>
+            <label className={styles.label}>List skills (one per line or comma-separated) <textarea name="skills" className={styles.textarea} value={skills} onChange={e => setSkills(e.target.value)} placeholder="e.g. Python, React, Excel" rows={4} /></label>
           </div>
         </div>
 

@@ -146,6 +146,7 @@ export default function Login({ onBack, mode: initialMode = 'login' }) {
               <label className={styles.label}>
                 6-digit code
                 <input
+                  name="otp"
                   type="text"
                   inputMode="numeric"
                   pattern="[0-9]*"
@@ -167,6 +168,7 @@ export default function Login({ onBack, mode: initialMode = 'login' }) {
             <label className={styles.label}>
               Name
               <input
+                name="name"
                 type="text"
                 className={styles.input}
                 value={name}
@@ -181,6 +183,7 @@ export default function Login({ onBack, mode: initialMode = 'login' }) {
             <label className={styles.label}>
               I am a
               <select
+                name="role"
                 className={styles.input}
                 value={role}
                 onChange={(e) => setRole(e.target.value)}
@@ -195,6 +198,7 @@ export default function Login({ onBack, mode: initialMode = 'login' }) {
           <label className={styles.label}>
             Email
             <input
+              name="email"
               type="email"
               className={styles.input}
               value={email}
@@ -209,6 +213,7 @@ export default function Login({ onBack, mode: initialMode = 'login' }) {
             <label className={styles.label}>
               Password
               <input
+                name="password"
                 type="password"
                 className={styles.input}
                 value={password}

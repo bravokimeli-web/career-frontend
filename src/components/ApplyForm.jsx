@@ -60,6 +60,7 @@ export default function ApplyForm({ opportunity, onSuccess, onCancel }) {
             <label className={styles.label}>
               Cover letter <span className={styles.required}>*</span>
               <textarea
+                name="coverLetter"
                 value={coverLetter}
                 onChange={(e) => setCoverLetter(e.target.value)}
                 className={styles.textarea}
@@ -71,6 +72,7 @@ export default function ApplyForm({ opportunity, onSuccess, onCancel }) {
             <label className={styles.label}>
               Resume (PDF/DOC) <span className={styles.required}>*</span>
               <input
+                name="resume"
                 type="file"
                 accept=".pdf,.doc,.docx"
                 onChange={(e) => setResume(e.target.files?.[0] || null)}
@@ -83,6 +85,7 @@ export default function ApplyForm({ opportunity, onSuccess, onCancel }) {
               <label className={styles.label}>
                 Recommendation letter <span className={styles.required}>*</span>
                 <input
+                  name="recommendationLetter"
                   type="file"
                   accept=".pdf,.doc,.docx"
                   onChange={(e) => setRecommendationLetter(e.target.files?.[0] || null)}

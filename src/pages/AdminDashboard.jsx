@@ -28,6 +28,7 @@ export default function AdminDashboard() {
   const [editing, setEditing] = useState(null)
   const [form, setForm] = useState({ title: '', company: '', type: 'internship', description: '', location: '', duration: '', applicationFee: 350, isActive: true })
   const [refunding, setRefunding] = useState(null)
+  const [coverLetterModal, setCoverLetterModal] = useState(null) // { applicant, coverLetter }
   const [sendingReminder, setSendingReminder] = useState(null)
   const [analytics, setAnalytics] = useState(null)
   const [visitors, setVisitors] = useState([])
@@ -201,6 +202,14 @@ export default function AdminDashboard() {
       })
       .catch(err => alert(err.response?.data?.message || 'Failed to send email'))
       .finally(() => setSendingEncouragement(null))
+  }
+
+  const openCoverLetter = (app) => {
+    setCoverLetterModal({
+      applicant: app.applicant,
+      coverLetter: app.coverLetter,
+      opportunity: app.opportunity,
+    })
   }
 
   const handleCreateReferral = () => {
@@ -378,9 +387,10 @@ export default function AdminDashboard() {
                     <td><small className={styles.timestamp}>{formatDateShort(app.updatedAt)}</small></td>
                     <td>
                       <div className={styles.docLinks}>
-                        {app.hasResume && <a href="#" className={styles.docLink}>Resume</a>}
-                        {app.hasCoverLetter && <a href="#" className={styles.docLink}>Letter</a>}
-                        {!app.hasResume && !app.hasCoverLetter && '—'}
+                        {app.resumeUrl && <a href={app.resumeUrl} target="_blank" rel="noopener noreferrer" className={styles.docLink}>Resume</a>}
+                        {app.recommendationLetterUrl && <a href={app.recommendationLetterUrl} target="_blank" rel="noopener noreferrer" className={styles.docLink}>Letter</a>}
+                        {app.coverLetter && <button type="button" className={styles.docLink} onClick={() => openCoverLetter(app)}>Cover Letter</button>}
+                        {!app.resumeUrl && !app.recommendationLetterUrl && !app.coverLetter && '—'}
                       </div>
                     </td>
                     <td>
@@ -642,7 +652,21 @@ export default function AdminDashboard() {
           </div>
         </div>
       )}
-      </div>
-    )
+
+      {coverLetterModal && (
+        <div className={styles.modalOverlay} onClick={() => setCoverLetterModal(null)}>
+          <div className={styles.modal} onClick={e => e.stopPropagation()}>
+            <h3>Cover Letter</h3>
+            <p><strong>Applicant:</strong> {coverLetterModal.applicant?.name || coverLetterModal.applicant?.email}</p>
+            <p><strong>Opportunity:</strong> {coverLetterModal.opportunity?.title} at {coverLetterModal.opportunity?.company}</p>
+            <div className={styles.coverLetterText}>
+              {coverLetterModal.coverLetter || 'No cover letter provided.'}
+            </div>
+            <button className={styles.closeBtn} onClick={() => setCoverLetterModal(null)}>Close</button>
+          </div>
+        </div>
+      )}
+    </div>
+  )
 }
 
