@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { Helmet } from 'react-helmet-async'
 import { opportunityService, applicationService, dashboardService } from '../services/api'
 import styles from './AdminDashboard.module.css'
 
@@ -231,6 +232,11 @@ export default function AdminDashboard() {
 
   return (
     <div className={styles.content}>
+      <Helmet>
+        <title>Admin Dashboard | CareerStart</title>
+        <meta name="description" content="Manage opportunities, review applications, and monitor platform analytics." />
+        <meta name="robots" content="noindex, nofollow" />
+      </Helmet>
       <h2 className={styles.title}>Admin Dashboard</h2>
       <div className={styles.tabs}>
         <button type="button" className={tab === 'overview' ? styles.tabActive : styles.tab} onClick={() => setTab('overview')}>Overview</button>

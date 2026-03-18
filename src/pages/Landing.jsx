@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
+import { Helmet } from 'react-helmet-async'
 import { Link } from 'react-router-dom'
 import { useTheme } from '../context/ThemeContext'
 import { IconSun, IconMoon } from '../components/Icons'
@@ -700,6 +701,11 @@ function Footer() {
 export default function Landing({ onEnterApp, onSignIn, onGetStarted }) {
   return (
     <div className={styles.landing}>
+      <Helmet>
+        <title>CareerStart — Internship & Industrial Attachment Opportunities in Kenya</title>
+        <meta name="description" content="Find your perfect internship or industrial attachment in Kenya. Access 250+ verified opportunities from leading companies, connect with top students, and launch your career with CareerStart." />
+        <link rel="canonical" href="https://www.careerstart.co.ke/" />
+      </Helmet>
       <Navbar onEnterApp={onEnterApp} onSignIn={onSignIn} onGetStarted={onGetStarted} />
       <Hero onEnterApp={onEnterApp} onSignIn={onSignIn} onGetStarted={onGetStarted} />
       <PromiseBand />

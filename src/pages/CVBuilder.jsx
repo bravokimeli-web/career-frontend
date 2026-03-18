@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Helmet } from 'react-helmet-async'
 import styles from './CVBuilder.module.css'
 
 const emptyEdu = () => ({ school: '', degree: '', year: '' })
@@ -58,6 +59,11 @@ export default function CVBuilder() {
 
   return (
     <div className={styles.wrap}>
+      <Helmet>
+        <title>CV Builder | CareerStart</title>
+        <meta name="description" content="Build a professional CV with our easy-to-use CV builder tool." />
+        <link rel="canonical" href="https://www.careerstart.co.ke/cv-builder" />
+      </Helmet>
       <h2 className={styles.title}>CV Builder</h2>
       <p className={styles.subtitle}>Build a simple CV. Copy the text and paste into Word or Google Docs to format, or upload it in My Profile.</p>
 

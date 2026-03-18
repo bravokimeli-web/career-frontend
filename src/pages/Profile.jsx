@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { Helmet } from 'react-helmet-async'
 import { useAuth } from '../context/AuthContext'
 import { profileService } from '../services/api'
 import styles from './Profile.module.css'
@@ -48,6 +49,11 @@ export default function Profile() {
 
   return (
     <div className={styles.content}>
+      <Helmet>
+        <title>My Profile | CareerStart</title>
+        <meta name="description" content="Update your profile information and manage your account settings." />
+        <link rel="canonical" href="https://www.careerstart.co.ke/profile" />
+      </Helmet>
       <h2 className={styles.title}>My Profile</h2>
       {message && <p className={styles.message}>{message}</p>}
       <form onSubmit={handleSubmit} className={styles.form}>

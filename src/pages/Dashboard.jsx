@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { Helmet } from 'react-helmet-async'
 import { useCounter } from '../hooks/useCounter'
 import { IconFile, IconCheck, IconEye, IconHeart, IconBookmark, IconPlus, IconChevronRight, IconFilter } from '../components/Icons'
 import { dashboardService, applicationService, opportunityService } from '../services/api'
@@ -272,6 +273,11 @@ export default function Dashboard({ setActiveNav }) {
 
   return (
     <div className="content">
+      <Helmet>
+        <title>Dashboard | CareerStart</title>
+        <meta name="description" content="Track your internship applications, view saved opportunities, and manage your career journey on CareerStart." />
+        <link rel="canonical" href="https://www.careerstart.co.ke/dashboard" />
+      </Helmet>
       {detailOpportunity && (
         <OpportunityDetailModal
           opportunity={detailOpportunity}

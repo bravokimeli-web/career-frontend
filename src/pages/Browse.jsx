@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { Helmet } from 'react-helmet-async'
 import { opportunityService } from '../services/api'
 import { useAuth } from '../context/AuthContext'
 import { IconBookmark } from '../components/Icons'
@@ -135,6 +136,11 @@ export default function Browse() {
 
   return (
     <div className={styles.content}>
+      <Helmet>
+        <title>Browse Opportunities | CareerStart</title>
+        <meta name="description" content="Find your perfect internship or industrial attachment in Kenya. Browse 250+ verified opportunities from leading companies." />
+        <link rel="canonical" href="https://www.careerstart.co.ke/browse" />
+      </Helmet>
       {applyOpportunity && (
         <ApplyForm
           opportunity={applyOpportunity}

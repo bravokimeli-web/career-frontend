@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
+import { Helmet } from 'react-helmet-async'
 import { useAuth } from '../context/AuthContext'
 import { authService } from '../services/api'
 import styles from './Login.module.css'
@@ -114,6 +115,11 @@ export default function Login({ onBack, mode: initialMode = 'login' }) {
 
   return (
     <div className={styles.wrap}>
+      <Helmet>
+        <title>Login | CareerStart</title>
+        <meta name="description" content="Log in to your CareerStart account to browse opportunities and track your applications." />
+        <link rel="canonical" href="https://www.careerstart.co.ke/login" />
+      </Helmet>
       <div className={styles.card}>
         {onBack && (
           <button type="button" className={styles.backBtn} onClick={onBack} aria-label="Back">
