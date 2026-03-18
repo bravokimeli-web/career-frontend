@@ -155,12 +155,14 @@ export default function AdminDashboard() {
     setShowForm(true)
   }
 
-  const statusLabel = (s) => ({ pending_payment: 'Pending payment', submitted: 'Received', under_review: 'Being processed', shortlisted: 'Shortlisted', rejected: 'Rejected', accepted: 'Accepted' }[s] || s)
+  const statusLabel = (s) => ({ pending_payment: 'Pending payment', submitted: 'Received', under_review: 'Being processed', shortlisted: 'Shortlisted', interview_scheduled: 'Interview Scheduled', interview_completed: 'Interview Completed', rejected: 'Rejected', accepted: 'Accepted' }[s] || s)
 
   const STATUS_OPTIONS = [
     { value: 'submitted', label: 'Received' },
     { value: 'under_review', label: 'Being processed' },
     { value: 'shortlisted', label: 'Shortlisted' },
+    { value: 'interview_scheduled', label: 'Interview Scheduled' },
+    { value: 'interview_completed', label: 'Interview Completed' },
     { value: 'rejected', label: 'Rejected' },
     { value: 'accepted', label: 'Accepted' },
   ]
@@ -363,6 +365,7 @@ export default function AdminDashboard() {
                   <th>Started</th>
                   <th>Updated</th>
                   <th>Documents</th>
+                  <th>Interview</th>
                   <th>Actions</th>
                 </tr>
               </thead>
@@ -398,6 +401,15 @@ export default function AdminDashboard() {
                         {app.coverLetter && <button type="button" className={styles.docLink} onClick={() => openCoverLetter(app)}>Cover Letter</button>}
                         {!app.resumeUrl && !app.recommendationLetterUrl && !app.coverLetter && '—'}
                       </div>
+                    </td>
+                    <td>
+                      {app.interviewToken && (
+                        <a href={`/interview/${app.interviewToken}`} target="_blank" rel="noopener noreferrer" className={styles.docLink}>
+                          {app.status === 'interview_completed' ? 'View Responses' : 'Interview Link'}
+                        </a>
+                      )}
+                      {!app.interviewToken && app.status === 'interview_scheduled' && 'Generating...'}
+                      {!app.interviewToken && '—'}
                     </td>
                     <td>
                       {!app.refundedAt && app.status !== 'pending_payment' && app.amountPaid && (

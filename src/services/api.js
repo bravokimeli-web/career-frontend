@@ -138,8 +138,9 @@ export const applicationService = {
   getAllAdmin: (params) => api.get('/applications/admin/all', { params }),
   updateStatusAdmin: (id, status) => api.patch(`/applications/admin/${id}/status`, { status }),
   refundAdmin: (id, reason) => api.post(`/applications/admin/${id}/refund`, { reason }),
-  sendReminderAdmin: (id) => api.post(`/applications/admin/${id}/send-reminder`),
-  transferMpesaAdmin: (data) => api.post('/applications/admin/transfer-mpesa', data),
+  sendReminderAdmin: (id) => api.post(`/applications/admin/${id}/send-reminder`),  getInterview: (token) => api.get(`/applications/interview/${token}`),
+  submitInterviewResponse: (token, formData) => api.post(`/applications/interview/${token}/response`, formData),
+  completeInterview: (token) => api.post(`/applications/interview/${token}/complete`),  transferMpesaAdmin: (data) => api.post('/applications/admin/transfer-mpesa', data),
 }
 
 // ══════════════════════════════════════════════════════════════

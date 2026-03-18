@@ -21,6 +21,7 @@ import CVBuilder from './pages/CVBuilder'
 import CareerGuidance from './pages/CareerGuidance'
 import Settings  from './pages/Settings'
 import AdminDashboard from './pages/AdminDashboard'
+import Interview from './pages/Interview'
 import Privacy   from './pages/Privacy'
 import Terms     from './pages/Terms'
 import Cookies   from './pages/Cookies'
@@ -291,6 +292,7 @@ export default function App() {
             <Route path="/privacy" element={<Privacy />} />
             <Route path="/terms" element={<Terms />} />
             <Route path="/cookies" element={<Cookies />} />
+            <Route path="/interview/:token" element={<Interview />} />
             <Route path="/app" element={<Navigate to="/app/dashboard" replace />} />
             <Route path="/app/:page" element={<AppRoute />} />
             <Route path="*" element={<NotFound />} />

@@ -1,0 +1,19 @@
+.container { max-width: 800px; margin: 0 auto; padding: 24px; }
+.header { text-align: center; margin-bottom: 32px; }
+.header h1 { font-size: 28px; color: var(--text); margin-bottom: 8px; }
+.header p { color: var(--text2); margin: 4px 0; }
+.progress { text-align: center; font-weight: 600; color: var(--accent); margin-bottom: 24px; }
+.question { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; margin-bottom: 24px; }
+.question h2 { font-size: 20px; color: var(--text); margin: 0; }
+.recording { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; margin-bottom: 24px; text-align: center; }
+.video { width: 100%; max-width: 400px; border-radius: var(--radius-sm); }
+.controls { margin-top: 16px; }
+.answer { margin-bottom: 24px; }
+.textarea { width: 100%; padding: 12px; border: 1px solid var(--border); border-radius: var(--radius-sm); font-family: inherit; font-size: 16px; resize: vertical; }
+.actions { display: flex; gap: 12px; justify-content: center; }
+.btnPrimary { padding: 12px 24px; background: var(--accent); color: var(--on-accent); border: none; border-radius: var(--radius-sm); font-size: 16px; font-weight: 600; cursor: pointer; }
+.btnPrimary:hover { opacity: 0.9; }
+.btnPrimary:disabled { opacity: 0.6; cursor: not-allowed; }
+.btnSecondary { padding: 12px 24px; border: 1px solid var(--border); background: var(--surface); color: var(--text2); border-radius: var(--radius-sm); font-size: 16px; cursor: pointer; }
+.btnSecondary:hover { background: var(--surface2); }
+.error { color: var(--red); text-align: center; }
