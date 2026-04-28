@@ -12,8 +12,8 @@
 
 import axios from 'axios'
 
-// Use relative path - CloudFront will proxy /api/* to the backend
-const baseURL = '/api';
+// Use full backend URL for production
+const baseURL = 'https://api.careerstart.co.ke/api';
 
 const api = axios.create({
   baseURL,
