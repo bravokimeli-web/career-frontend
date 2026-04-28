@@ -50,25 +50,55 @@ export default function Applications() {
       setShowCancelledMessage(true)
       window.history.replaceState({}, '', window.location.pathname)
       setTimeout(() => setShowCancelledMessage(false), 4000)
-    } else if (params.get('payment') === 'done') {
-      const reference = params.get('reference') || params.get('trxref')
-      if (reference && reference.startsWith('APP-')) {
+      return
+    }
+
+    const reference = params.get('reference') || params.get('trxref')
+    if (params.get('payment') === 'done' && reference && reference.startsWith('APP-')) {
+      let attempts = 0
+      const maxAttempts = 10
+      const intervalMs = 3000
+      setPaying(true)
+
+      const check = () => {
         applicationService.verifyPayment(reference)
           .then(res => {
             if (res.data?.verified) {
               refresh()
               refreshUser?.()
+              setPaying(false)
+              setShowSuccessPopup(true)
+              window.history.replaceState({}, '', window.location.pathname)
+            } else if (++attempts < maxAttempts) {
+              setTimeout(check, intervalMs)
+            } else {
+              // give up after N attempts but still show a success message
+              setPaying(false)
+              setShowSuccessPopup(true)
+              window.history.replaceState({}, '', window.location.pathname)
             }
           })
-          .catch(() => {})
-      } else {
-        refresh()
+          .catch(() => {
+            if (++attempts < maxAttempts) {
+              setTimeout(check, intervalMs)
+            } else {
+              setPaying(false)
+              setShowSuccessPopup(true)
+              window.history.replaceState({}, '', window.location.pathname)
+            }
+          })
       }
-      setShowSuccessPopup(true)
-      window.history.replaceState({}, '', window.location.pathname)
-      const t = setTimeout(() => refresh(), 1500)
+
+      check()
       const hideT = setTimeout(() => setShowSuccessPopup(false), 5000)
-      return () => { clearTimeout(t); clearTimeout(hideT) }
+      return () => { clearTimeout(hideT) }
+    }
+
+    if (params.get('payment') === 'done') {
+      refresh()
+      window.history.replaceState({}, '', window.location.pathname)
+      const hideT = setTimeout(() => setShowSuccessPopup(false), 5000)
+      return () => clearTimeout(hideT)
     }
   }, [])
 
