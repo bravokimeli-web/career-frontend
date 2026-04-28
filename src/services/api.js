@@ -12,11 +12,8 @@
 
 import axios from 'axios'
 
-// In production, use full backend URL so /api requests hit your server (not the frontend host).
-// In dev, use /api and Vite proxy forwards to VITE_API_URL.
-const baseURL = import.meta.env.VITE_API_URL
-  ? `${import.meta.env.VITE_API_URL.replace(/\/$/, '')}/api`
-  : '/api'
+// Use relative path - CloudFront will proxy /api/* to the backend
+const baseURL = '/api';
 
 const api = axios.create({
   baseURL,
