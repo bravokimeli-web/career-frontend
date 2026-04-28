@@ -204,6 +204,7 @@ function AppShell() {
 function LandingRoute() {
   const { user, loading } = useAuth()
   const navigate = useNavigate()
+  const location = useLocation()
 
   // Track landing page visit (and capture promo code if present)
   useEffect(() => {
@@ -224,7 +225,17 @@ function LandingRoute() {
       </div>
     )
   }
-  if (user) return <Navigate to="/app" replace />
+  if (user) {
+    const params = new URLSearchParams(location.search)
+    const redirect = params.get('redirect')
+    if (redirect && redirect.startsWith('/app/')) {
+      const forwardParams = new URLSearchParams(location.search)
+      forwardParams.delete('redirect')
+      const query = forwardParams.toString()
+      return <Navigate to={`${redirect}${query ? `?${query}` : ''}`} replace />
+    }
+    return <Navigate to="/app" replace />
+  }
   return (
     <Landing
       onSignIn={() => navigate('/login')}
