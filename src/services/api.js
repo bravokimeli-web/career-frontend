@@ -12,8 +12,9 @@
 
 import axios from 'axios'
 
-// Use full backend URL for production
-const baseURL = 'https://api.careerstart.co.ke/api';
+// Use VITE_API_URL from environment if available, otherwise fall back to the default.
+const apiHost = import.meta.env.VITE_API_URL || 'https://api.careerstart.co.ke'
+const baseURL = apiHost.replace(/\/$/, '') + '/api'
 
 const api = axios.create({
   baseURL,
