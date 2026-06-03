@@ -1,10 +1,21 @@
+import { Helmet } from 'react-helmet-async'
 import styles from './Legal.module.css'
 
 export default function Cookies() {
   return (
-    <div className={styles.content}>
-      <h1>Cookie Policy</h1>
-      <p className={styles.lastUpdated}>Last updated: February 25, 2026</p>
+    <>
+      <Helmet>
+        <title>CareerStart — Cookie Policy</title>
+        <meta
+          name="description"
+          content="Read CareerStart's cookie policy, including how we use essential, preference, and analytics cookies to improve your experience."
+        />
+        <link rel="canonical" href="https://www.careerstart.co.ke/cookies" />
+        <meta name="robots" content="index, follow" />
+      </Helmet>
+      <div className={styles.content}>
+        <h1>Cookie Policy</h1>
+        <p className={styles.lastUpdated}>Last updated: February 25, 2026</p>
 
       <section>
         <h2>1. What Are Cookies?</h2>
