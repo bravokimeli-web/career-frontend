@@ -70,5 +70,6 @@ export default function Cookies() {
         <p><strong>Email:</strong> opportunity.app@gmail.com</p>
       </section>
     </div>
+    </>
   )
 }
