@@ -54,6 +54,7 @@ export default function Applications() {
     }
 
     const reference = params.get('reference') || params.get('trxref')
+    const applicationId = params.get('appId')
     if (params.get('payment') === 'done' && reference && reference.startsWith('APP-')) {
       let attempts = 0
       const maxAttempts = 10
@@ -61,7 +62,7 @@ export default function Applications() {
       setPaying(true)
 
       const check = () => {
-        applicationService.verifyPayment(reference)
+        applicationService.verifyPayment(reference, applicationId)
           .then(res => {
             if (res.data?.verified) {
               refresh()
